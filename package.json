@@ -11,5 +11,9 @@
   "devDependencies": {
     "typescript": "~5.6.2",
     "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "i18next": "^26.0.4",
+    "i18next-browser-languagedetector": "^8.2.1"
   }
 }
