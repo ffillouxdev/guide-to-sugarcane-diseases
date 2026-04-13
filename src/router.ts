@@ -1,53 +1,47 @@
 import i18next from './i18n'
 import { nav } from './layout'
-import { homeView } from './views/home'
-import { catalogueView } from './views/catalogue'
-import { privacyView } from './views/privacy'
-import { legalView } from './views/legal'
 
 type Route = {
-  paths: string[]
-  view: () => string
+  path: string
   titleKey: string
 }
 
 const routes: Route[] = [
-  { paths: ['/', ''],                   view: homeView,      titleKey: 'home.title' },
-  { paths: ['/catalogue', '/catalog'],  view: catalogueView, titleKey: 'catalogue.title' },
-  { paths: ['/privacy'],                view: privacyView,   titleKey: 'privacy.title' },
-  { paths: ['/legal'],                  view: legalView,     titleKey: 'legal.title' },
+  // Home
+  { path: '/',                titleKey: 'home.title' },
+  // Catalogue — en / fr / es
+  { path: '/catalogue',       titleKey: 'catalogue.title' },
+  { path: '/catalog',         titleKey: 'catalogue.title' },
+  { path: '/catalogo',        titleKey: 'catalogue.title' },
+  // Privacy — en / fr / es
+  { path: '/privacy',         titleKey: 'privacy.title' },
+  { path: '/confidentialite', titleKey: 'privacy.title' },
+  { path: '/privacidad',      titleKey: 'privacy.title' },
+  // Legal — en / fr / es
+  { path: '/legal',           titleKey: 'legal.title' },
+  { path: '/mentions-legales', titleKey: 'legal.title' },
+  { path: '/aviso-legal',     titleKey: 'legal.title' },
 ]
 
-function getHash(): string {
-  return window.location.hash.slice(1) || '/'
-}
-
-function notFoundView(): string {
-  const t = i18next.t.bind(i18next)
-  return /*html*/`
-    ${nav()}
-    <main class="flex flex-col items-center justify-center min-h-[80vh] px-6 text-center gap-8">
-      <h1 class="text-6xl font-bold text-gray-300">404</h1>
-      <p class="text-gray-500">${t('notFound')}</p>
-      <a href="#/" class="text-green-700 hover:text-green-800 underline text-sm">${t('backHome')}</a>
-    </main>
-  `
-}
-
-function matchRoute(path: string): { html: string; titleKey: string } {
-  const route = routes.find(r => r.paths.includes(path))
-  if (route) {
-    return { html: route.view(), titleKey: route.titleKey }
-  }
-  return { html: notFoundView(), titleKey: 'notFound' }
+function resolve(pathname: string): { titleKey: string } {
+  const route = routes.find(r => r.path === pathname)
+  return { titleKey: route ? route.titleKey : 'notFound' }
 }
 
 function render(app: HTMLElement): void {
-  const path = getHash()
-  const { html, titleKey } = matchRoute(path)
-  app.innerHTML = html
-  document.title = `${i18next.t(titleKey)} — D-CAS 2.0`
+  const { titleKey } = resolve(window.location.pathname)
+  const t = i18next.t.bind(i18next)
+  const title = t(titleKey)
+
+  document.title = `${title} — D-CAS 2.0`
   document.documentElement.lang = i18next.language
+
+  app.innerHTML = /*html*/`
+    ${nav()}
+    <main class="max-w-3xl mx-auto px-6 py-10">
+      <h1 class="text-3xl font-bold text-gray-900">${title}</h1>
+    </main>
+  `
 
   const select = document.getElementById('lang-select') as HTMLSelectElement | null
   select?.addEventListener('change', () => {
@@ -55,7 +49,22 @@ function render(app: HTMLElement): void {
   })
 }
 
+export function navigateTo(path: string, app: HTMLElement): void {
+  history.pushState(null, '', path)
+  render(app)
+}
+
 export function initRouter(app: HTMLElement): void {
-  window.addEventListener('hashchange', () => render(app))
+  window.addEventListener('popstate', () => render(app))
+
+  document.addEventListener('click', (e) => {
+    const anchor = (e.target as HTMLElement).closest('a')
+    if (!anchor) return
+    const href = anchor.getAttribute('href')
+    if (!href || href.startsWith('http') || href.startsWith('//')) return
+    e.preventDefault()
+    navigateTo(href, app)
+  })
+
   render(app)
 }
