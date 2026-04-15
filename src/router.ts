@@ -1,47 +1,54 @@
 import i18next from './i18n'
-import { header, bindHeaderEvents } from './layout'
+import { bindHeaderEvents } from './layout'
+import { homeView } from './views/home'
+import { catalogueView } from './views/catalogue'
+import { privacyView } from './views/privacy'
+import { legalView } from './views/legal'
 
 type Route = {
   path: string
   titleKey: string
+  view: () => string
+}
+
+const notFoundView = () => {
+  const t = i18next.t.bind(i18next)
+  return /*html*/`
+    <main class="max-w-5xl mx-auto px-6 py-10 pb-20 md:pb-10 text-center">
+      <h1 class="text-3xl font-bold text-gray-900">${t('notFound')}</h1>
+    </main>
+  `
 }
 
 const routes: Route[] = [
   // Home
-  { path: '/',                titleKey: 'home.title' },
+  { path: '/',                titleKey: 'home.title',      view: homeView },
   // Catalogue — en / fr / es
-  { path: '/catalogue',       titleKey: 'catalogue.title' },
-  { path: '/catalog',         titleKey: 'catalogue.title' },
-  { path: '/catalogo',        titleKey: 'catalogue.title' },
+  { path: '/catalogue',       titleKey: 'catalogue.title', view: catalogueView },
+  { path: '/catalog',         titleKey: 'catalogue.title', view: catalogueView },
+  { path: '/catalogo',        titleKey: 'catalogue.title', view: catalogueView },
   // Privacy — en / fr / es
-  { path: '/privacy',         titleKey: 'privacy.title' },
-  { path: '/confidentialite', titleKey: 'privacy.title' },
-  { path: '/privacidad',      titleKey: 'privacy.title' },
+  { path: '/privacy',         titleKey: 'privacy.title',   view: privacyView },
+  { path: '/confidentialite', titleKey: 'privacy.title',   view: privacyView },
+  { path: '/privacidad',      titleKey: 'privacy.title',   view: privacyView },
   // Legal — en / fr / es
-  { path: '/legal',           titleKey: 'legal.title' },
-  { path: '/mentions-legales', titleKey: 'legal.title' },
-  { path: '/aviso-legal',     titleKey: 'legal.title' },
+  { path: '/legal',           titleKey: 'legal.title',     view: legalView },
+  { path: '/mentions-legales', titleKey: 'legal.title',    view: legalView },
+  { path: '/aviso-legal',     titleKey: 'legal.title',     view: legalView },
 ]
 
-function resolve(pathname: string): { titleKey: string } {
-  const route = routes.find(r => r.path === pathname)
-  return { titleKey: route ? route.titleKey : 'notFound' }
+function resolve(pathname: string): Route {
+  return routes.find(r => r.path === pathname) ?? { path: pathname, titleKey: 'notFound', view: notFoundView }
 }
 
 function render(app: HTMLElement): void {
-  const { titleKey } = resolve(window.location.pathname)
+  const route = resolve(window.location.pathname)
   const t = i18next.t.bind(i18next)
-  const title = t(titleKey)
 
-  document.title = `${title} — D-CAS 2.0`
+  document.title = `${t(route.titleKey)} — D-CAS 2.0`
   document.documentElement.lang = i18next.language
 
-  app.innerHTML = /*html*/`
-    ${header()}
-    <main class="max-w-5xl mx-auto px-6 py-10 pb-20 md:pb-10">
-      <h1 class="text-3xl font-bold text-gray-900 text-center">${title}</h1>
-    </main>
-  `
+  app.innerHTML = route.view()
 
   bindHeaderEvents(() => render(app))
 }
