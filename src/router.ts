@@ -1,5 +1,5 @@
 import i18next from './i18n'
-import { nav } from './layout'
+import { header, bindHeaderEvents } from './layout'
 
 type Route = {
   path: string
@@ -37,26 +37,13 @@ function render(app: HTMLElement): void {
   document.documentElement.lang = i18next.language
 
   app.innerHTML = /*html*/`
-    ${nav()}
+    ${header()}
     <main class="max-w-5xl mx-auto px-6 py-10">
       <h1 class="text-3xl font-bold text-gray-900">${title}</h1>
     </main>
   `
 
-  const select = document.getElementById('lang-select') as HTMLSelectElement | null
-  select?.addEventListener('change', () => {
-    i18next.changeLanguage(select.value).then(() => render(app))
-  })
-
-  const menuBtn = document.getElementById('menu-btn')
-  const menuDropdown = document.getElementById('menu-dropdown')
-  menuBtn?.addEventListener('click', (e) => {
-    e.stopPropagation()
-    menuDropdown?.classList.toggle('hidden')
-  })
-  document.addEventListener('click', () => {
-    menuDropdown?.classList.add('hidden')
-  })
+  bindHeaderEvents(() => render(app))
 }
 
 export function navigateTo(path: string, app: HTMLElement): void {

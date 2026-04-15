@@ -1,10 +1,10 @@
 import i18next from '../i18n'
-import { nav } from '../layout'
+import { header } from '../layout'
 
 export function homeView(): string {
   const t = i18next.t.bind(i18next)
   return /*html*/`
-    ${nav()}
+    ${header()}
     <main class="flex flex-col items-center justify-center min-h-[80vh] px-6 text-center gap-6">
       <p class="text-xs uppercase tracking-widest text-green-700 font-medium">CIRAD · D-CAS 2.0</p>
       <h1 class="text-4xl font-bold text-gray-900">${t('home.title')}</h1>

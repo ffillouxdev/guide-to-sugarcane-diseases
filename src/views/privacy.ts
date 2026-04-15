@@ -1,5 +1,5 @@
 import i18next from '../i18n'
-import { nav } from '../layout'
+import { header } from '../layout'
 
 export function privacyView(): string {
   const t = i18next.t.bind(i18next)
@@ -18,7 +18,7 @@ export function privacyView(): string {
   `).join('')
 
   return /*html*/`
-    ${nav()}
+    ${header()}
     <main class="max-w-2xl mx-auto px-6 py-10">
       <h1 class="text-2xl font-bold text-gray-900 mb-8">${t('privacy.title')}</h1>
       ${sectionsHtml}
