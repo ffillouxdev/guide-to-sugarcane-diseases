@@ -47,7 +47,7 @@ export function header(): string {
   return /*html*/`
     <!-- Header -->
     <header class="bg-white sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto flex items-center justify-between px-6 h-14">
+      <div class="max-w-5xl mx-auto flex items-center justify-between px-6 h-14">
 
         <!-- Logo -->
         <a href="/" class="flex flex-col gap-1 mr-8 shrink-0">
@@ -88,7 +88,7 @@ export function header(): string {
           ${options}
         </select>
       </div>
-      <hr class="max-w-7xl mx-auto border-gray-200"/>
+      <hr class="max-w-5xl mx-auto border-gray-200"/>
     </header>
 
     <!-- Mobile bottom navbar (hidden on desktop) -->
