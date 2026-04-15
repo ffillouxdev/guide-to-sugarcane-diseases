@@ -7,9 +7,9 @@ const languages = [
 ]
 
 const localizedPaths: Record<string, Record<string, string>> = {
-  catalogue: { en: '/catalogue', fr: '/catalogue', es: '/catalogo' },
-  privacy:   { en: '/privacy',   fr: '/confidentialite', es: '/privacidad' },
-  legal:     { en: '/legal',     fr: '/mentions-legales', es: '/aviso-legal' },
+  catalogue: { en: '/catalog',  fr: '/catalogue', es: '/catalogo' },
+  privacy:   { en: '/privacy',  fr: '/confidentialite', es: '/privacidad' },
+  legal:     { en: '/legal',    fr: '/mentions-legales', es: '/aviso-legal' },
 }
 
 function lp(key: string): string {
@@ -76,7 +76,7 @@ export function header(): string {
           ${options}
         </select>
       </div>
-      <hr class="max-w-7xl mx-auto"/>
+      <hr class="max-w-7xl mx-auto border-gray-200"/>
     </header>
   `
 }
