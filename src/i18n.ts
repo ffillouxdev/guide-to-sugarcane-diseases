@@ -13,7 +13,7 @@ const resources = {
         legal: 'Legal notice',
       },
       home: {
-        title: 'Identification Key',
+        title: 'Where do you observe the symptoms on the sugarcane?',
         subtitle: 'A Guide to Sugarcane Diseases',
         hint: 'Answer a few questions about the observed symptoms\nto identify the disease.',
         cta: 'Start diagnosis',
@@ -56,7 +56,7 @@ const resources = {
         legal: 'Mentions légales',
       },
       home: {
-        title: "Clé d'identification",
+        title: 'Où observez-vous les symptômes sur la canne à sucre ?',
         subtitle: 'Guide des maladies de la canne à sucre',
         hint: 'Répondez à quelques questions sur les symptômes observés\npour identifier la maladie.',
         cta: 'Commencer le diagnostic',
@@ -99,7 +99,7 @@ const resources = {
         legal: 'Aviso legal',
       },
       home: {
-        title: 'Clave de identificación',
+        title: '¿Dónde observa los síntomas en la caña de azúcar?',
         subtitle: 'Guía de enfermedades de la caña de azúcar',
         hint: 'Responda algunas preguntas sobre los síntomas observados\npara identificar la enfermedad.',
         cta: 'Iniciar diagnóstico',
