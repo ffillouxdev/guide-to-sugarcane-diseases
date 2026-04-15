@@ -2,8 +2,6 @@ export function callToAction(): string {
   return /*html*/`
     <section class="max-w-2xl mx-auto px-6 py-10 pb-20">
       <div class="flex items-start gap-6">
-        <!-- Image placeholder -->
-        <div class="flex-1 h-32 bg-gray-200 border border-gray-300 rounded"></div>
         <div class="[flex:2] text-left">
           <p class="text-sm text-green-700">
             For additionnal information, please see the book
@@ -15,6 +13,8 @@ export function callToAction(): string {
             <span class="hidden md:inline">The free web book →</span>
           </a>
         </div>
+        <!-- Image placeholder -->
+        <div class="flex-1 h-32 bg-gray-200 border border-gray-300 rounded"></div>
       </div>
     </section>
   `
