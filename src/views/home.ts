@@ -1,5 +1,6 @@
 import i18next from '../i18n'
 import { header } from '../layout'
+import { callToAction } from '../components/call_to_action'
 
 export function homeView(): string {
   const t = i18next.t.bind(i18next)
@@ -13,6 +14,7 @@ export function homeView(): string {
       <button class="mt-2 px-8 py-3 bg-green-700 text-white rounded-xl text-sm font-medium hover:bg-green-800 transition-colors">
         ${t('home.cta')}
       </button>
+      ${callToAction()}
     </main>
   `
 }
