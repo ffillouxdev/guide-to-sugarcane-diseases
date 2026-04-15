@@ -38,7 +38,7 @@ function render(app: HTMLElement): void {
 
   app.innerHTML = /*html*/`
     ${nav()}
-    <main class="max-w-3xl mx-auto px-6 py-10">
+    <main class="max-w-3xl mx-auto px-6 py-10 pb-24">
       <h1 class="text-3xl font-bold text-gray-900">${title}</h1>
     </main>
   `
@@ -46,6 +46,16 @@ function render(app: HTMLElement): void {
   const select = document.getElementById('lang-select') as HTMLSelectElement | null
   select?.addEventListener('change', () => {
     i18next.changeLanguage(select.value).then(() => render(app))
+  })
+
+  const menuBtn = document.getElementById('menu-btn')
+  const menuDropdown = document.getElementById('menu-dropdown')
+  menuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation()
+    menuDropdown?.classList.toggle('hidden')
+  })
+  document.addEventListener('click', () => {
+    menuDropdown?.classList.add('hidden')
   })
 }
 

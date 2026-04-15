@@ -5,8 +5,9 @@ const resources = {
   en: {
     translation: {
       nav: {
-        home: 'Identification Key',
+        home: 'Home',
         catalogue: 'Catalog',
+        more: 'More',
         privacy: 'Privacy',
         legal: 'Legal notice',
       },
@@ -46,8 +47,9 @@ const resources = {
   fr: {
     translation: {
       nav: {
-        home: "Clé d'identification",
+        home: 'Accueil',
         catalogue: 'Catalogue',
+        more: 'Plus',
         privacy: 'Confidentialité',
         legal: 'Mentions légales',
       },
@@ -87,8 +89,9 @@ const resources = {
   es: {
     translation: {
       nav: {
-        home: 'Clave de identificación',
+        home: 'Inicio',
         catalogue: 'Catálogo',
+        more: 'Más',
         privacy: 'Privacidad',
         legal: 'Aviso legal',
       },
