@@ -39,7 +39,7 @@ function render(app: HTMLElement): void {
   app.innerHTML = /*html*/`
     ${header()}
     <main class="max-w-5xl mx-auto px-6 py-10">
-      <h1 class="text-3xl font-bold text-gray-900">${title}</h1>
+      <h1 class="text-3xl font-bold text-gray-900 text-center">${title}</h1>
     </main>
   `
 

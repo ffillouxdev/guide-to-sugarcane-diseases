@@ -38,11 +38,11 @@ export function header(): string {
   }
 
   return /*html*/`
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto flex items-center px-6 h-14">
+    <header class="bg-white sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-6 h-14">
 
         <!-- Logo -->
-        <a href="/" class="flex items-center gap-1 mr-8 shrink-0">
+        <a href="/" class="flex flex-col gap-1 mr-8 shrink-0">
           <span class="font-bold text-lg text-gray-900 leading-none">D-CAS</span>
           <span class="text-xs text-gray-500 leading-none">v2.0.0</span>
         </a>
@@ -71,14 +71,12 @@ export function header(): string {
           </div>
         </nav>
 
-        <!-- Spacer -->
-        <div class="flex-1"></div>
-
         <!-- Language selector -->
         <select id="lang-select" class="text-sm border border-gray-300 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer">
           ${options}
         </select>
       </div>
+      <hr class="max-w-7xl mx-auto"/>
     </header>
   `
 }
