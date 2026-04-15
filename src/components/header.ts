@@ -64,7 +64,11 @@ export function header(): string {
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
               ${t('nav.more')}
             </button>
-            <div id="menu-dropdown" class="hidden absolute left-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+            <div id="menu-dropdown" class="hidden absolute left-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+              <label class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
+                <input type="checkbox" id="offline-toggle" checked class="accent-green-700 w-4 h-4"/>
+                ${t('nav.offline')}
+              </label>
               <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
               <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
             </div>
@@ -79,6 +83,33 @@ export function header(): string {
       <hr class="max-w-7xl mx-auto border-gray-200"/>
     </header>
   `
+}
+
+function isOfflineEnabled(): boolean {
+  return localStorage.getItem('dcas-offline') !== 'false'
+}
+
+async function registerSW(): Promise<void> {
+  if (!('serviceWorker' in navigator)) return
+  await navigator.serviceWorker.register('/sw.js')
+}
+
+async function unregisterSW(): Promise<void> {
+  if (!('serviceWorker' in navigator)) return
+  const registrations = await navigator.serviceWorker.getRegistrations()
+  for (const reg of registrations) {
+    await reg.unregister()
+  }
+  const keys = await caches.keys()
+  for (const key of keys) {
+    await caches.delete(key)
+  }
+}
+
+export function initOffline(): void {
+  if (isOfflineEnabled()) {
+    registerSW()
+  }
 }
 
 export function bindHeaderEvents(onLangChange: () => void): void {
@@ -96,4 +127,18 @@ export function bindHeaderEvents(onLangChange: () => void): void {
   document.addEventListener('click', () => {
     menuDropdown?.classList.add('hidden')
   })
+
+  const offlineToggle = document.getElementById('offline-toggle') as HTMLInputElement | null
+  if (offlineToggle) {
+    offlineToggle.checked = isOfflineEnabled()
+    offlineToggle.addEventListener('change', () => {
+      if (offlineToggle.checked) {
+        localStorage.setItem('dcas-offline', 'true')
+        registerSW()
+      } else {
+        localStorage.setItem('dcas-offline', 'false')
+        unregisterSW()
+      }
+    })
+  }
 }

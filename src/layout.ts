@@ -1,1 +1,1 @@
-export { header, bindHeaderEvents } from './components/header'
+export { header, bindHeaderEvents, initOffline } from './components/header'
