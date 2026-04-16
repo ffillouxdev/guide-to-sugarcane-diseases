@@ -88,7 +88,7 @@ export function header(): string {
           ${options}
         </select>
       </div>
-      <hr class="max-w-5xl mx-auto border-gray-200"/>
+      <hr class="max-w-5xl mx-auto border-gray-300"/>
     </header>
 
     <!-- Mobile bottom navbar (hidden on desktop) -->

@@ -19,7 +19,7 @@ export function privacyView(): string {
 
   return /*html*/`
     ${header()}
-    <main class="max-w-5xl mx-auto px-6 py-10 md:h-[93vh] bg-[url('/assets/main-bg.png')] bg-cover bg-center">
+    <main class="max-w-5xl mx-auto px-6 py-10 md:h-[93vh] bg-[url('/assets/main-bg.png')] bg-cover bg-center mt-2">
       <h1 class="text-2xl font-bold text-gray-900 text-center mb-8">${t('privacy.title')}</h1>
       ${sectionsHtml}
     </main>
