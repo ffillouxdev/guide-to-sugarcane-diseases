@@ -1,9 +1,10 @@
 import i18next from './i18n'
-import { bindHeaderEvents } from './layout'
+import { bindHeaderEvents, header } from './layout'
 import { homeView } from './views/home'
 import { catalogueView } from './views/catalogue'
 import { privacyView } from './views/privacy'
 import { legalView } from './views/legal'
+import { initQuestionnaire } from './components/questionnaire'
 
 type Route = {
   path: string
@@ -14,6 +15,7 @@ type Route = {
 const notFoundView = () => {
   const t = i18next.t.bind(i18next)
   return /*html*/`
+    ${header()}
     <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center mt-2">
       <h1 class="text-3xl font-bold text-gray-900">${t('notFound')}</h1>
     </main>
@@ -51,6 +53,10 @@ function render(app: HTMLElement): void {
   app.innerHTML = route.view()
 
   bindHeaderEvents(() => render(app))
+
+  if (route.path === '/') {
+    initQuestionnaire()
+  }
 }
 
 export function navigateTo(path: string, app: HTMLElement): void {
