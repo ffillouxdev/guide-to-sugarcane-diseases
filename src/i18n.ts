@@ -23,8 +23,8 @@ const resources = {
         subtitle: 'Complete list of referenced diseases',
         empty: 'The catalog will be available once cle.json is loaded.',
         searchPlaceholder: 'Search for a disease by name...',
-        diseaseNameColumn: 'disease name',
-        pathogenColumn: 'pathogen',
+        diseaseNameColumn: 'Disease common name',
+        pathogenColumn: 'Pathogen name (Syn. = Synonymy*)',
       },
       cta: {
         intro: 'For additionnal information, please see the book',
@@ -76,8 +76,8 @@ const resources = {
         subtitle: 'Liste complète des maladies référencées',
         empty: 'Le catalogue sera disponible une fois le fichier cle.json chargé.',
         searchPlaceholder: 'Rechercher une maladie par nom...',
-        diseaseNameColumn: 'nom de la maladie',
-        pathogenColumn: 'pathogène',
+        diseaseNameColumn: 'Disease common name',
+        pathogenColumn: 'Pathogen name (Syn. = Synonymy*)',
       },
       cta: {
         intro: 'Pour plus d\'informations, consultez l\'ouvrage',
@@ -129,8 +129,8 @@ const resources = {
         subtitle: 'Lista completa de enfermedades referenciadas',
         empty: 'El catálogo estará disponible una vez cargado el archivo cle.json.',
         searchPlaceholder: 'Buscar una enfermedad por nombre...',
-        diseaseNameColumn: 'nombre de la enfermedad',
-        pathogenColumn: 'patógeno',
+        diseaseNameColumn: 'Disease common name',
+        pathogenColumn: 'Pathogen name (Syn. = Synonymy*)',
       },
       cta: {
         intro: 'Para más información, consulte el libro',
