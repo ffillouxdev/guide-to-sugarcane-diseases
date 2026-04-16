@@ -1,7 +1,7 @@
 import i18next from './i18n'
 import { bindHeaderEvents, header } from './layout'
 import { homeView } from './views/home'
-import { catalogueView } from './views/catalogue'
+import { catalogueView, initCatalogue } from './views/catalogue'
 import { privacyView } from './views/privacy'
 import { legalView } from './views/legal'
 import { initQuestionnaire } from './components/questionnaire'
@@ -56,6 +56,10 @@ function render(app: HTMLElement): void {
 
   if (route.path === '/') {
     initQuestionnaire()
+  }
+
+  if (['/catalogue', '/catalog', '/catalogo'].includes(route.path)) {
+    initCatalogue()
   }
 }
 
