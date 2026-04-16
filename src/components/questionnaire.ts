@@ -29,7 +29,7 @@ function renderQuestion(): string {
     <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
       ${node.text}
     </h1>
-    <div class="flex flex-col gap-3 max-w-md mx-auto">
+    <div class="flex flex-col gap-3 mx-auto">
       ${buttons}
     </div>
   `
