@@ -77,6 +77,19 @@ function navigateTo(nodeId: string, label: string): void {
   update()
 }
 
+function truncateBreadcrumbLabel(label: string, maxLength: number = 40): string {
+  // Find first punctuation mark (period, comma, semicolon)
+  const punctIndex = label.search(/[.,;]/)
+  if (punctIndex > 0 && punctIndex < maxLength) {
+    return label.substring(0, punctIndex)
+  }
+  // Otherwise truncate at maxLength
+  if (label.length > maxLength) {
+    return label.substring(0, maxLength)
+  }
+  return label
+}
+
 function navigateToBreadcrumb(nodeId: string): void {
   if (nodeId === 'root') {
     state.history = []
@@ -96,7 +109,11 @@ function handleClick(e: MouseEvent): void {
   const btn = (e.target as HTMLElement).closest('.question-btn') as HTMLElement | null
   if (btn) {
     const next = btn.dataset.next
-    const label = btn.textContent?.trim() ?? ''
+    let label = btn.textContent?.trim() ?? ''
+    // Truncate label for breadcrumb (only for questions, not diseases)
+    if (next && !next.startsWith('D_')) {
+      label = truncateBreadcrumbLabel(label)
+    }
     if (next) navigateTo(next, label)
     return
   }
