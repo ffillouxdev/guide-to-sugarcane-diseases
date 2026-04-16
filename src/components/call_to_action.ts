@@ -1,6 +1,6 @@
 export function callToAction(): string {
   return /*html*/`
-    <section class="w-full px-6 py-10 pb-20">
+    <section class="w-full py-10 pb-20">
       <div class="flex items-start gap-6">
         <div class="[flex:2] text-left">
           <p class="text-sm text-green-700">
