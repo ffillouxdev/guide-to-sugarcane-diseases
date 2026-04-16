@@ -59,12 +59,18 @@ function update(): void {
 }
 
 function navigateTo(nodeId: string, label: string): void {
-  state.history.push({ label, nodeId })
+  // If it's a disease, use the disease name as breadcrumb label
+  let breadcrumbLabel = label
+  if (nodeId.startsWith('D_') && state.key) {
+    breadcrumbLabel = state.key.diseases[nodeId]?.name || label
+  }
+
+  state.history.push({ label: breadcrumbLabel, nodeId })
   state.currentNodeId = nodeId
 
   // Add result item to breadcrumb when reaching a disease
   if (nodeId.startsWith('D_')) {
-    const resultLabel = `result_${label.replace(/\s+/g, '_')}`
+    const resultLabel = `result_${breadcrumbLabel.replace(/\s+/g, '_')}`
     state.history.push({ label: resultLabel, nodeId })
   }
 
