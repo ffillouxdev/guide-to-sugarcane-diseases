@@ -13,8 +13,7 @@ export function callToAction(): string {
             <span class="hidden md:inline">The free web book →</span>
           </a>
         </div>
-        <!-- Image placeholder -->
-        <div class="flex-1 h-32 bg-gray-200 border border-gray-300 rounded"></div>
+        <img src="/assets/a_guide_to_sugarcane-img.png" alt="A guide to sugarcane diseases" class="flex-1 h-32 object-cover rounded" />
       </div>
     </section>
   `
