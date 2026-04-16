@@ -14,7 +14,7 @@ export function catalogueView(): string {
       </div>
 
       <div class="bg-white rounded border overflow-auto h-[calc(100%-4rem)]">
-        <table class="w-full text-sm">
+        <table class="w-full table-fixed text-sm">
           <thead class="sticky top-0 bg-white">
             <tr class="border-b border-gray-300">
               <th data-sort="name" class="text-left px-4 py-3 font-semibold cursor-pointer select-none hover:bg-gray-50">
@@ -79,7 +79,7 @@ export async function initCatalogue(): Promise<void> {
     return list.map(d => /*html*/`
       <tr class="hover:bg-gray-50">
         <td class="px-4 py-2">${d.name}</td>
-        <td class="px-4 py-2 text-gray-500 italic truncate max-w-xs" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
+        <td class="px-4 py-2 text-gray-500 italic truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
       </tr>
     `).join('')
   }
