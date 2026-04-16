@@ -79,7 +79,7 @@ export async function initCatalogue(): Promise<void> {
     return list.map(d => /*html*/`
       <tr class="hover:bg-gray-50">
         <td class="px-4 py-2">${d.name}</td>
-        <td class="px-4 py-2 text-gray-500 italic">${d.pathogen ?? '—'}</td>
+        <td class="px-4 py-2 text-gray-500 italic truncate max-w-xs" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
       </tr>
     `).join('')
   }

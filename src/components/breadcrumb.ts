@@ -12,9 +12,9 @@ export function breadcrumb(history: BreadcrumbItem[]): string {
   const items = history.map((item, i) => {
     const isLast = i === history.length - 1
     if (isLast) {
-      return /*html*/`<span class="text-gray-500">${item.label}</span>`
+      return /*html*/`<span class="text-gray-500 truncate max-w-xs" title="${item.label}">${item.label}</span>`
     }
-    return /*html*/`<a href="#" data-breadcrumb="${item.nodeId}" class="hover:underline">${item.label}</a>`
+    return /*html*/`<a href="#" data-breadcrumb="${item.nodeId}" class="hover:underline truncate max-w-xs" title="${item.label}">${item.label}</a>`
   })
 
   return /*html*/`
