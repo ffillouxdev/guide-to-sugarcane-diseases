@@ -71,7 +71,7 @@ export function initRouter(app: HTMLElement): void {
     const anchor = (e.target as HTMLElement).closest('a')
     if (!anchor) return
     const href = anchor.getAttribute('href')
-    if (!href || href.startsWith('http') || href.startsWith('//')) return
+    if (!href || href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) return
     e.preventDefault()
     navigateTo(href, app)
   })

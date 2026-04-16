@@ -6,12 +6,14 @@ interface State {
   key: IdentificationKey | null
   currentNodeId: string
   history: BreadcrumbItem[]
+  listenerAttached: boolean
 }
 
 const state: State = {
   key: null,
   currentNodeId: 'root',
   history: [],
+  listenerAttached: false,
 }
 
 function renderQuestion(): string {
@@ -44,7 +46,7 @@ function renderDisease(): string {
     <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
       ${disease.name}
     </h1>
-    ${disease.pathogen ? /*html*/`<p class="text-sm text-gray-600 text-center mb-4">Pathogen: <span class="font-semibold">${disease.pathogen}</span></p>` : ''}
+    ${disease.pathogen ? /*html*/`<p class="text-sm text-gray-600 text-center mb-4"><em>${disease.pathogen}</em></p>` : ''}
   `
 }
 
@@ -76,31 +78,38 @@ function navigateToBreadcrumb(nodeId: string): void {
   update()
 }
 
+function handleClick(e: MouseEvent): void {
+  // Handle question button click
+  const btn = (e.target as HTMLElement).closest('.question-btn') as HTMLElement | null
+  if (btn) {
+    const next = btn.dataset.next
+    const label = btn.textContent?.trim() ?? ''
+    if (next) navigateTo(next, label)
+    return
+  }
+
+  // Handle breadcrumb click — stop propagation so the router doesn't intercept
+  const crumb = (e.target as HTMLElement).closest('[data-breadcrumb]') as HTMLElement | null
+  if (crumb) {
+    e.preventDefault()
+    e.stopPropagation()
+    const nodeId = crumb.dataset.breadcrumb
+    if (nodeId) navigateToBreadcrumb(nodeId)
+  }
+}
+
 export async function initQuestionnaire(): Promise<void> {
-  state.key = await loadKey()
+  // Reset state on each home render
   state.currentNodeId = 'root'
   state.history = []
+  state.listenerAttached = false
+
+  state.key = await loadKey()
   update()
 
   const container = document.getElementById('questionnaire')
-  if (!container) return
+  if (!container || state.listenerAttached) return
 
-  container.addEventListener('click', (e) => {
-    // Handle question button click
-    const btn = (e.target as HTMLElement).closest('.question-btn') as HTMLElement | null
-    if (btn) {
-      const next = btn.dataset.next
-      const label = btn.textContent?.trim() ?? ''
-      if (next) navigateTo(next, label)
-      return
-    }
-
-    // Handle breadcrumb click
-    const crumb = (e.target as HTMLElement).closest('[data-breadcrumb]') as HTMLElement | null
-    if (crumb) {
-      e.preventDefault()
-      const nodeId = crumb.dataset.breadcrumb
-      if (nodeId) navigateToBreadcrumb(nodeId)
-    }
-  })
+  container.addEventListener('click', handleClick)
+  state.listenerAttached = true
 }
