@@ -14,7 +14,7 @@ type Route = {
 const notFoundView = () => {
   const t = i18next.t.bind(i18next)
   return /*html*/`
-    <main class="max-w-5xl mx-auto px-6 py-10 md:h-[93vh] pb-20 md:pb-10 text-center">
+    <main class="max-w-5xl mx-auto px-6 py-10 md:h-[93vh] bg-[url('/assets/main-bg.png')] bg-cover bg-center">
       <h1 class="text-3xl font-bold text-gray-900">${t('notFound')}</h1>
     </main>
   `
