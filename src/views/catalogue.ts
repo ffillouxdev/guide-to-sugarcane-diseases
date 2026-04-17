@@ -35,7 +35,7 @@ export function catalogueView(): string {
         </div>
       </div>
 
-      <div id="catalogue-result-view" class="hidden flex-1 min-h-0 overflow-auto"></div>
+      <div id="catalogue-result-view" class="hidden"></div>
 
       ${callToAction()}
     </main>
@@ -109,9 +109,10 @@ export async function initCatalogue(): Promise<void> {
     const disease = key.diseases[diseaseId]
     if (!disease) return
 
+    const main = document.querySelector('main')
     const listView = document.getElementById('catalogue-list-view')
     const resultView = document.getElementById('catalogue-result-view')
-    if (!listView || !resultView) return
+    if (!main || !listView || !resultView) return
 
     const resultLabel = `result_${disease.name.replace(/\s+/g, '_')}`
     const topSlot = /*html*/`
@@ -124,6 +125,8 @@ export async function initCatalogue(): Promise<void> {
     resultView.innerHTML = diseaseResult(disease, { topSlot })
     bindCarousel(resultView, disease.image ?? [])
 
+    main.classList.remove('h-[calc(100vh-4.5rem)]', 'overflow-hidden', 'flex', 'flex-col')
+    main.classList.add('min-h-[calc(100vh-4.5rem)]')
     listView.classList.add('hidden')
     resultView.classList.remove('hidden')
 
@@ -132,9 +135,13 @@ export async function initCatalogue(): Promise<void> {
   }
 
   function showList(): void {
+    const main = document.querySelector('main')
     const listView = document.getElementById('catalogue-list-view')
     const resultView = document.getElementById('catalogue-result-view')
-    if (!listView || !resultView) return
+    if (!main || !listView || !resultView) return
+
+    main.classList.add('h-[calc(100vh-4.5rem)]', 'overflow-hidden', 'flex', 'flex-col')
+    main.classList.remove('min-h-[calc(100vh-4.5rem)]')
     resultView.classList.add('hidden')
     resultView.innerHTML = ''
     listView.classList.remove('hidden')
