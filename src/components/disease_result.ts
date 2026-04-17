@@ -10,34 +10,45 @@ export interface DiseaseResultOptions {
 function carousel(images: string[]): string {
   const t = i18next.t.bind(i18next)
   const hasImages = images.length > 0
+  const hasMultiple = images.length > 1
   const firstSrc = hasImages ? images[0] : ''
 
+  const frame = /*html*/`
+    <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
+      ${hasImages
+        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="" class="w-full h-full object-cover" />`
+        : /*html*/`<span class="text-gray-400 text-sm italic">${t('result.noImage')}</span>`
+      }
+    </div>
+  `
+
+  // Single image or no images: just the frame, no navigation controls.
+  if (!hasMultiple) {
+    return /*html*/`
+      <div class="w-full max-w-xl mx-auto mb-6">
+        ${frame}
+      </div>
+    `
+  }
+
+  // Multiple images: full carousel with arrows and counter.
   return /*html*/`
     <div class="relative w-full max-w-xl mx-auto mb-6" data-carousel>
       <button type="button" data-carousel-prev aria-label="${t('result.prevImage')}"
-        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"
-        ${hasImages ? '' : 'disabled'}>
+        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white">
         <span class="text-lg leading-none">‹</span>
       </button>
 
-      <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
-        ${hasImages
-          ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="" class="w-full h-full object-cover" />`
-          : /*html*/`<span class="text-gray-400 text-sm italic">${t('result.noImage')}</span>`
-        }
-      </div>
+      ${frame}
 
       <button type="button" data-carousel-next aria-label="${t('result.nextImage')}"
-        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"
-        ${hasImages ? '' : 'disabled'}>
+        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white">
         <span class="text-lg leading-none">›</span>
       </button>
 
-      ${hasImages && images.length > 1 ? /*html*/`
-        <div data-carousel-indicator class="text-center text-xs text-gray-500 mt-2">
-          <span data-carousel-index>1</span> / ${images.length}
-        </div>
-      ` : ''}
+      <div class="text-center text-xs text-gray-500 mt-2">
+        <span data-carousel-index>1</span> / ${images.length}
+      </div>
     </div>
   `
 }
@@ -88,7 +99,7 @@ export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {})
 // [data-carousel] block rendered by `diseaseResult`. Safe to call when no
 // carousel is present — it will no-op.
 export function bindCarousel(root: ParentNode, images: string[]): void {
-  if (images.length === 0) return
+  if (images.length <= 1) return
 
   const container = root.querySelector('[data-carousel]')
   if (!container) return
