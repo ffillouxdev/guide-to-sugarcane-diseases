@@ -1,7 +1,7 @@
 import i18next from './i18n'
 import { bindHeaderEvents, header } from './layout'
 import { homeView } from './views/home'
-import { catalogueView, initCatalogue } from './views/catalogue'
+import { catalogueView, initCatalogue } from './views/catalog'
 import { privacyView } from './views/privacy'
 import { legalView } from './views/legal'
 import { initQuestionnaire } from './components/questionnaire'
