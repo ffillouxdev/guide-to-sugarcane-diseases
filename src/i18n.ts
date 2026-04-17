@@ -105,7 +105,7 @@ const resources = {
       },
       cta: {
         intro: 'Pour plus d\'informations, consultez l\'ouvrage',
-        bookTitle: 'Guide des maladies de la canne à sucre',
+        bookTitle: 'A guide to sugarcane diseases',
         authors: 'édité par Philippe ROTT, Jean-Claude GIRARD et Jean Heinrich DAUGROIS',
         buttonMobile: 'Web book →',
         buttonDesktop: 'Consulter l\'ouvrage gratuit →',
@@ -170,7 +170,7 @@ const resources = {
       },
       cta: {
         intro: 'Para más información, consulte el libro',
-        bookTitle: 'Guía de enfermedades de la caña de azúcar',
+        bookTitle: 'A guide to sugarcane diseases',
         authors: 'editado por Philippe ROTT, Jean-Claude GIRARD y Jean Heinrich DAUGROIS',
         buttonMobile: 'Web book →',
         buttonDesktop: 'Consultar el libro gratuito →',
