@@ -19,10 +19,10 @@ export function catalogueView(): string {
           <table class="w-full table-fixed text-sm">
             <thead class="sticky top-0 bg-white">
               <tr class="border-b border-gray-300">
-                <th data-sort="name" class="text-left px-4 py-4 md:py-3 font-semibold cursor-pointer select-none hover:bg-gray-50">
+                <th data-sort="name" class="text-left px-4 py-3 font-semibold cursor-pointer select-none hover:bg-gray-50">
                   ${t('catalogue.diseaseNameColumn')} <span id="sort-name" class="text-gray-400">↕</span>
                 </th>
-                <th data-sort="pathogen" class="text-left px-4 py-4 md:py-3 font-semibold cursor-pointer select-none hover:bg-gray-50">
+                <th data-sort="pathogen" class="text-left px-4 py-3 font-semibold cursor-pointer select-none hover:bg-gray-50">
                   ${t('catalogue.pathogenColumn')} <span id="sort-pathogen" class="text-gray-400">↕</span>
                 </th>
                 <th class="text-left px-4 py-3 font-semibold w-24"></th>
@@ -88,9 +88,9 @@ export async function initCatalogue(): Promise<void> {
     }
     return list.map(d => /*html*/`
       <tr class="hover:bg-gray-50">
-        <td class="px-4 py-3 md:py-2">${d.name}</td>
-        <td class="px-4 py-3 md:py-2 text-gray-500 italic truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
-        <td class="px-4 py-3 md:py-2">
+        <td class="px-4 py-2">${d.name}</td>
+        <td class="px-4 py-2 text-gray-500 italic truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
+        <td class="px-4 py-2">
           <button type="button" data-disease-id="${d.id}" class="disease-link-btn bg-black text-white text-xs font-medium w-full py-1.5 rounded hover:bg-gray-800 transition-colors">
             ${t('catalogue.linkLabel')}
           </button>
