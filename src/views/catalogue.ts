@@ -15,8 +15,8 @@ export function catalogueView(): string {
           <input id="catalogue-search" type="text" placeholder="${t('catalogue.searchPlaceholder')}" class="w-full px-4 py-2 border bg-gray-300/60 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-700" />
         </div>
 
-        <div class="bg-white rounded border overflow-auto flex-1 min-h-0 -mx-4 md:mx-0 md:rounded">
-          <table class="w-full table-fixed text-base md:text-sm">
+        <div class="bg-white rounded border overflow-auto flex-1 min-h-0">
+          <table class="w-full table-fixed text-sm">
             <thead class="sticky top-0 bg-white">
               <tr class="border-b border-gray-300">
                 <th data-sort="name" class="text-left px-4 py-4 md:py-3 font-semibold cursor-pointer select-none hover:bg-gray-50">
