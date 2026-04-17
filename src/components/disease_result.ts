@@ -64,7 +64,7 @@ function geoZones(geo: Disease['geo_locations']): string {
   return /*html*/`
     <section class="mt-6">
       <h2 class="font-semibold text-gray-900 mb-2">${t('result.geoLocations')} 🌐 :</h2>
-      <p class="my-4 text-xs text-amber-700">⚠️ — ${t('result.geoWarning')} <strong class="text-sm">${t('result.geoWarningEmail')}</strong></p>
+      <p class="my-4 text-xs font-semibold text-amber-700">⚠️ — ${t('result.geoWarning')} <strong class="text-sm">${t('result.geoWarningEmail')}</strong></p>
       ${details.join('')}
     </section>
   `
