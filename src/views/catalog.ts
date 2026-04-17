@@ -23,7 +23,7 @@ export function catalogueView(): string {
                   ${t('catalogue.diseaseNameColumn')} <span id="sort-name" class="text-gray-400">↕</span>
                 </th>
                 <th data-sort="pathogen" class="text-left px-4 py-2 md:py-3 text-xs md:text-sm font-semibold cursor-pointer select-none hover:bg-gray-50" title="${t('catalogue.pathogenColumn')}">
-                  Nom agent pathogène <span class="hidden md:inline">(Syn. = Synonymie*)</span> <span id="sort-pathogen" class="text-gray-400">↕</span>
+                  ${t('catalogue.pathogenColumnShort')} <span class="hidden md:inline">(Syn. = Synonymy*)</span> <span id="sort-pathogen" class="text-gray-400">↕</span>
                 </th>
                 <th class="text-left px-4 py-3 font-semibold w-24"></th>
               </tr>
