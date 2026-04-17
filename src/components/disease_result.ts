@@ -47,6 +47,7 @@ function carousel(images: string[]): string {
       </button>
 
       <div class="text-center text-xs text-gray-500 mt-2">
+        <div data-carousel-filename class="font-medium text-gray-600 mb-1">${images.length > 0 ? images[0].split('/').pop() : ''}</div>
         <span data-carousel-index>1</span> / ${images.length}
       </div>
     </div>
@@ -106,6 +107,7 @@ export function bindCarousel(root: ParentNode, images: string[]): void {
 
   const img = container.querySelector('[data-carousel-img]') as HTMLImageElement | null
   const idxEl = container.querySelector('[data-carousel-index]')
+  const filenameEl = container.querySelector('[data-carousel-filename]')
   const prev = container.querySelector('[data-carousel-prev]') as HTMLButtonElement | null
   const next = container.querySelector('[data-carousel-next]') as HTMLButtonElement | null
 
@@ -115,6 +117,7 @@ export function bindCarousel(root: ParentNode, images: string[]): void {
     idx = (i + images.length) % images.length
     if (img) img.src = images[idx]
     if (idxEl) idxEl.textContent = String(idx + 1)
+    if (filenameEl) filenameEl.textContent = images[idx].split('/').pop() ?? ''
   }
 
   prev?.addEventListener('click', () => show(idx - 1))
