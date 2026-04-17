@@ -20,7 +20,7 @@ function carousel(images: string[]): string {
         <span class="text-lg leading-none">‹</span>
       </button>
 
-      <div class="aspect-[4/3] bg-gray-100 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
+      <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
         ${hasImages
           ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="" class="w-full h-full object-cover" />`
           : /*html*/`<span class="text-gray-400 text-sm italic">${t('result.noImage')}</span>`
@@ -51,7 +51,7 @@ function geoZones(geo: Disease['geo_locations']): string {
     for (const [continent, countries] of Object.entries(entry)) {
       const countries_html = countries.map(c => /*html*/`<li class="text-sm text-gray-700">${c}</li>`).join('')
       details.push(/*html*/`
-        <details class="border-b border-gray-200 py-2">
+        <details class="border-b border-white py-2">
           <summary class="font-medium cursor-pointer hover:text-green-700">${continent}</summary>
           <ul class="list-disc list-inside mt-2 ml-2 space-y-0.5">
             ${countries_html}

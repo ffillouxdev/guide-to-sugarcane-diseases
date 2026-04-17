@@ -9,7 +9,7 @@ export function catalogueView(): string {
 
   return /*html*/`
     ${header()}
-    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center mt-2 flex flex-col overflow-hidden">
+    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-fixed mt-2 flex flex-col overflow-hidden">
       <div id="catalogue-list-view" class="flex flex-col min-h-0 flex-1">
         <div class="mb-4 shrink-0">
           <input id="catalogue-search" type="text" placeholder="${t('catalogue.searchPlaceholder')}" class="w-full px-4 py-2 border bg-gray-300/60 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-700" />
@@ -91,7 +91,7 @@ export async function initCatalogue(): Promise<void> {
         <td class="px-4 py-2">${d.name}</td>
         <td class="px-4 py-2 text-gray-500 italic truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
         <td class="px-4 py-2">
-          <button type="button" data-disease-id="${d.id}" class="disease-link-btn bg-black text-white text-xs font-medium px-3 py-1.5 rounded hover:bg-gray-800 transition-colors">
+          <button type="button" data-disease-id="${d.id}" class="disease-link-btn bg-black text-white text-xs font-medium w-full py-1.5 rounded hover:bg-gray-800 transition-colors">
             ${t('catalogue.linkLabel')}
           </button>
         </td>
