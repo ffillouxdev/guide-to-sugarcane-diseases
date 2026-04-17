@@ -46,22 +46,25 @@ function geoZones(geo: Disease['geo_locations']): string {
   const t = i18next.t.bind(i18next)
   if (!geo || geo.length === 0) return ''
 
-  const items: string[] = []
+  const details: string[] = []
   for (const entry of geo) {
     for (const [continent, countries] of Object.entries(entry)) {
-      items.push(/*html*/`<li class="font-medium">${continent}</li>`)
-      for (const country of countries) {
-        items.push(/*html*/`<li class="ml-4">${country}</li>`)
-      }
+      const countries_html = countries.map(c => /*html*/`<li class="text-sm text-gray-700">${c}</li>`).join('')
+      details.push(/*html*/`
+        <details class="border-b border-gray-200 py-2">
+          <summary class="font-medium cursor-pointer hover:text-green-700">${continent}</summary>
+          <ul class="list-disc list-inside mt-2 ml-2 space-y-0.5">
+            ${countries_html}
+          </ul>
+        </details>
+      `)
     }
   }
 
   return /*html*/`
     <section class="mt-6">
-      <h2 class="font-semibold text-gray-900 mb-2">${t('result.geoZones')} 🌐 :</h2>
-      <ul class="list-disc list-inside text-sm text-gray-700 space-y-0.5">
-        ${items.join('')}
-      </ul>
+      <h2 class="font-semibold text-gray-900 mb-2">${t('result.geoLocations')} 🌐 :</h2>
+      ${details.join('')}
       <p class="mt-4 text-xs text-amber-700">⚠️ — ${t('result.geoWarning')}</p>
     </section>
   `
