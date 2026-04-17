@@ -36,7 +36,8 @@ const resources = {
         prevImage: 'Previous image',
         nextImage: 'Next image',
         geoLocations: 'Geographical locations',
-        geoWarning: 'If you are not from any of these geographical locations, please contact us! sugarscane@cirad.fr',
+        geoWarning: 'If you are not from any of these geographical locations, please contact us!',
+        geoWarningEmail: 'sugarcane@cirad.fr',
       },
       cta: {
         intro: 'For additionnal information, please see the book',
@@ -101,7 +102,8 @@ const resources = {
         prevImage: 'Image précédente',
         nextImage: 'Image suivante',
         geoLocations: 'Localisations géographiques',
-        geoWarning: "Si vous n'êtes pas originaire de ces zones géographiques, contactez-nous ! sugarscane@cirad.fr",
+        geoWarning: "Si vous n'êtes pas originaire de ces zones géographiques, contactez-nous !",
+        geoWarningEmail: 'sugarcane@cirad.fr',
       },
       cta: {
         intro: 'Pour plus d\'informations, consultez l\'ouvrage',
@@ -166,7 +168,8 @@ const resources = {
         prevImage: 'Imagen anterior',
         nextImage: 'Imagen siguiente',
         geoLocations: 'Ubicaciones geográficas',
-        geoWarning: 'Si no es de ninguna de estas ubicaciones geográficas, ¡contáctenos! sugarscane@cirad.fr',
+        geoWarning: 'Si no es de ninguna de estas ubicaciones geográficas, ¡contáctenos!',
+        geoWarningEmail: 'sugarcane@cirad.fr',
       },
       cta: {
         intro: 'Para más información, consulte el libro',
