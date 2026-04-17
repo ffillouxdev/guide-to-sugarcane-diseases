@@ -1,6 +1,7 @@
 import { loadKey, type IdentificationKey } from '../data/key-loader'
 import { questionButton } from './question_button'
 import { breadcrumb, type BreadcrumbItem } from './breadcrumb'
+import { diseaseResult, bindCarousel } from './disease_result'
 
 interface State {
   key: IdentificationKey | null
@@ -41,13 +42,7 @@ function renderDisease(): string {
   const disease = state.key.diseases[state.currentNodeId]
   if (!disease) return ''
 
-  return /*html*/`
-    ${breadcrumb(state.history)}
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
-      ${disease.name}
-    </h1>
-    ${disease.pathogen ? /*html*/`<p class="text-sm text-gray-600 text-center mb-4"><em>${disease.pathogen}</em></p>` : ''}
-  `
+  return diseaseResult(disease, { topSlot: breadcrumb(state.history) })
 }
 
 function update(): void {
@@ -56,6 +51,11 @@ function update(): void {
 
   const isDisease = state.currentNodeId.startsWith('D_')
   container.innerHTML = isDisease ? renderDisease() : renderQuestion()
+
+  if (isDisease && state.key) {
+    const disease = state.key.diseases[state.currentNodeId]
+    if (disease) bindCarousel(container, disease.image ?? [])
+  }
 }
 
 function navigateTo(nodeId: string, label: string): void {
