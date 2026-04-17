@@ -13,7 +13,7 @@ export function catalogueView(): string {
         <input id="catalogue-search" type="text" placeholder="${t('catalogue.searchPlaceholder')}" class="w-full px-4 py-2 border bg-gray-300/60 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-700" />
       </div>
 
-      <div class="bg-white rounded border overflow-auto h-[calc(100%-4rem)]">
+      <div class="bg-white rounded border overflow-auto max-h-[calc(100vh-16rem)]">
         <table class="w-full table-fixed text-sm">
           <thead class="sticky top-0 bg-white">
             <tr class="border-b border-gray-300">
