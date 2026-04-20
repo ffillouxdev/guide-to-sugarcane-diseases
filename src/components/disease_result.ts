@@ -1,4 +1,4 @@
-import i18next from '../i18n'
+import i18next, { useT } from '../i18n'
 import type { Disease } from '../data/key-loader'
 
 export interface DiseaseResultOptions {
@@ -8,7 +8,7 @@ export interface DiseaseResultOptions {
 }
 
 function carousel(images: string[]): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
   const hasImages = images.length > 0
   const hasMultiple = images.length > 1
   const firstSrc = hasImages ? images[0] : ''
@@ -16,7 +16,7 @@ function carousel(images: string[]): string {
   const frame = /*html*/`
     <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
       ${hasImages
-        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="" class="w-full h-full object-cover" />`
+        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="" loading="lazy" class="w-full h-full object-cover" />`
         : /*html*/`<span class="text-gray-400 text-sm italic">${t('result.noImage')}</span>`
       }
     </div>
@@ -55,7 +55,7 @@ function carousel(images: string[]): string {
 }
 
 function geoZones(geo: Disease['geo_locations']): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
   if (!geo || geo.length === 0) return ''
 
   const details: string[] = []

@@ -1,8 +1,8 @@
-import i18next from '../i18n'
+import i18next, { useT } from '../i18n'
 import { header } from '../layout'
 
 export function privacyView(): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
 
   const sections: Array<{ heading: string; body: string }> = [
     { heading: t('privacy.dataHeading'),       body: t('privacy.dataBody') },

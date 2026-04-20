@@ -1,4 +1,4 @@
-import i18next from '../i18n'
+import i18next, { useT } from '../i18n'
 
 export interface BreadcrumbItem {
   label: string
@@ -6,7 +6,7 @@ export interface BreadcrumbItem {
 }
 
 export function breadcrumb(history: BreadcrumbItem[]): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
   const home = /*html*/`<a href="#" data-breadcrumb="root" class="hover:underline">${t('nav.home')}</a>`
 
   const items = history.map((item, i) => {

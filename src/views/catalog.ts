@@ -1,11 +1,11 @@
-import i18next from '../i18n'
+import i18next, { useT } from '../i18n'
 import { header } from '../layout'
 import { callToAction } from '../components/call_to_action'
 import { loadKey } from '../data/key-loader'
 import { diseaseResult, bindCarousel } from '../components/disease_result'
 
 export function catalogueView(): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
 
   return /*html*/`
     ${header()}
@@ -46,7 +46,7 @@ export async function initCatalogue(): Promise<void> {
   // loadKey() caches the JSON in memory — called once here for the list, and
   // reused without refetch when rendering each disease result.
   const key = await loadKey()
-  const t = i18next.t.bind(i18next)
+  const t = useT()
 
   type Disease = (typeof key.diseases)[string]
   type Entry = Disease & { id: string; section: string }
