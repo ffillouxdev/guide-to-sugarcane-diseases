@@ -8,6 +8,7 @@ export function legalView(): string {
     { heading: t('legal.publisherHeading'), body: t('legal.publisherBody') },
     { heading: t('legal.hostingHeading'),   body: t('legal.hostingBody') },
     { heading: t('legal.creditsHeading'),   body: t('legal.creditsBody') },
+    { heading: t('legal.copyrightHeading'), body: t('legal.copyrightBody') },
   ]
 
   const sectionsHtml = sections.map(({ heading, body }) => /*html*/`
