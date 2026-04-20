@@ -1,4 +1,4 @@
-import i18next from '../i18n'
+import i18next, { useT } from '../i18n'
 
 const languages = [
   { code: 'en', flag: '🇬🇧', label: 'english' },
@@ -23,7 +23,7 @@ function isActive(path: string): boolean {
 }
 
 export function header(): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
   const lang = languages.find(l => l.code === i18next.language) ?? languages[0]
 
   const options = languages.map(({ code, flag, label }) =>

@@ -235,3 +235,7 @@ await i18next
   })
 
 export default i18next
+
+export function useT() {
+  return i18next.t.bind(i18next)
+}

@@ -1,7 +1,7 @@
-import i18next from '../i18n'
+import i18next, { useT } from '../i18n'
 
 export function callToAction(): string {
-  const t = i18next.t.bind(i18next)
+  const t = useT()
 
   return /*html*/`
     <section class="w-full py-10 pb-20">

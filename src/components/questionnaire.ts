@@ -53,7 +53,14 @@ function update(): void {
   if (!container) return
 
   const isDisease = state.currentNodeId.startsWith('D_')
-  container.innerHTML = isDisease ? renderDisease() : renderQuestion()
+  const html = isDisease ? renderDisease() : renderQuestion()
+
+  // Create temporary container and parse HTML to preserve event listeners on container
+  const temp = document.createElement('div')
+  temp.innerHTML = html
+
+  // Replace container's children while keeping the container itself intact
+  container.replaceChildren(...temp.childNodes)
 
   if (isDisease) {
     const disease = lookupDisease(state.currentNodeId)
