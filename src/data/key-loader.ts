@@ -10,12 +10,13 @@ export interface Disease {
   name: string
   image: string[]
   pathogen?: string
-  geo_locations: Array<Record<string, string[]>>
+  geo_locations?: Array<Record<string, string[]>>
 }
 
 export interface IdentificationKey {
   nodes: Record<string, KeyNode>
   diseases: Record<string, Disease>
+  other_causes?: Record<string, Disease>
 }
 
 const fileMap: Record<string, string> = {

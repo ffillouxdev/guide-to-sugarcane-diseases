@@ -36,10 +36,13 @@ function renderQuestion(): string {
   `
 }
 
-function renderDisease(): string {
-  if (!state.key) return ''
+function lookupDisease(id: string) {
+  if (!state.key) return undefined
+  return state.key.diseases[id] ?? state.key.other_causes?.[id]
+}
 
-  const disease = state.key.diseases[state.currentNodeId]
+function renderDisease(): string {
+  const disease = lookupDisease(state.currentNodeId)
   if (!disease) return ''
 
   return diseaseResult(disease, { topSlot: breadcrumb(state.history) })
@@ -52,8 +55,8 @@ function update(): void {
   const isDisease = state.currentNodeId.startsWith('D_')
   container.innerHTML = isDisease ? renderDisease() : renderQuestion()
 
-  if (isDisease && state.key) {
-    const disease = state.key.diseases[state.currentNodeId]
+  if (isDisease) {
+    const disease = lookupDisease(state.currentNodeId)
     if (disease) bindCarousel(container, disease.image ?? [])
   }
 }
@@ -63,7 +66,7 @@ function navigateTo(nodeId: string, label: string): void {
 
   // For diseases, add result item to breadcrumb only
   if (nodeId.startsWith('D_') && state.key) {
-    const diseaseName = state.key.diseases[nodeId]?.name || label
+    const diseaseName = lookupDisease(nodeId)?.name || label
     const resultLabel = `result_${diseaseName.replace(/\s+/g, '_')}`
     state.history.push({ label: resultLabel, nodeId })
   } else {

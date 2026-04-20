@@ -49,17 +49,18 @@ export async function initCatalogue(): Promise<void> {
   const t = i18next.t.bind(i18next)
 
   type Disease = (typeof key.diseases)[string]
+  type Entry = Disease & { id: string; section: string }
   type SortKey = 'name' | 'pathogen'
   type SortDir = 'asc' | 'desc'
 
-  const allDiseases: Array<Disease & { id: string }> = Object.entries(key.diseases).map(
-    ([id, d]) => ({ ...d, id })
-  )
+  const diseases: Entry[] = Object.entries(key.diseases).map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionDiseases') }))
+  const otherCauses: Entry[] = Object.entries(key.other_causes ?? {}).map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionOtherCauses') }))
   let sortKey: SortKey = 'name'
   let sortDir: SortDir = 'asc'
   let query = ''
+  let selectedSection: string | null = null
 
-  function getSorted(list: typeof allDiseases): typeof allDiseases {
+  function sortEntries(list: Entry[]): Entry[] {
     return list.slice().sort((a, b) => {
       const av = (sortKey === 'name' ? a.name : (a.pathogen ?? '')).toLowerCase()
       const bv = (sortKey === 'name' ? b.name : (b.pathogen ?? '')).toLowerCase()
@@ -67,11 +68,12 @@ export async function initCatalogue(): Promise<void> {
     })
   }
 
-  function getFiltered(): typeof allDiseases {
-    if (!query) return allDiseases
-    return allDiseases.filter(d =>
+  function filterEntries(list: Entry[]): Entry[] {
+    if (!query) return list
+    return list.filter(d =>
       d.name.toLowerCase().includes(query) ||
-      (d.pathogen ?? '').toLowerCase().includes(query)
+      (d.pathogen ?? '').toLowerCase().includes(query) ||
+      d.section.toLowerCase().includes(query)
     )
   }
 
@@ -82,11 +84,8 @@ export async function initCatalogue(): Promise<void> {
     if (pathEl) pathEl.textContent = sortKey === 'pathogen' ? (sortDir === 'asc' ? '↑' : '↓') : '↕'
   }
 
-  function renderRows(list: typeof allDiseases): string {
-    if (list.length === 0) {
-      return `<tr><td colspan="3" class="px-4 py-6 text-gray-400 text-center">${t('catalogue.empty')}</td></tr>`
-    }
-    return list.map(d => /*html*/`
+  function renderEntryRow(d: Entry): string {
+    return /*html*/`
       <tr class="hover:bg-gray-50">
         <td class="px-4 py-2">${d.name}</td>
         <td class="px-4 py-2 text-gray-500 italic truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
@@ -96,17 +95,48 @@ export async function initCatalogue(): Promise<void> {
           </button>
         </td>
       </tr>
-    `).join('')
+    `
+  }
+
+  function renderSection(heading: string, list: Entry[]): string {
+    if (list.length === 0) return ''
+    const isSelected = selectedSection === heading
+    return /*html*/`
+      <tr class="${isSelected ? 'bg-amber-100' : 'bg-gray-100'}">
+        <td colspan="3" class="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-amber-700 cursor-pointer hover:bg-amber-200 transition-colors" data-section-filter="${heading}">
+          ${heading}
+        </td>
+      </tr>
+      ${list.map(renderEntryRow).join('')}
+    `
+  }
+
+  function renderRows(): string {
+    let diseasesView = sortEntries(filterEntries(diseases))
+    let otherView = sortEntries(filterEntries(otherCauses))
+
+    if (selectedSection !== null) {
+      diseasesView = selectedSection === t('catalogue.sectionDiseases') ? diseasesView : []
+      otherView = selectedSection === t('catalogue.sectionOtherCauses') ? otherView : []
+    }
+
+    if (diseasesView.length === 0 && otherView.length === 0) {
+      return `<tr><td colspan="3" class="px-4 py-6 text-gray-400 text-center">${t('catalogue.empty')}</td></tr>`
+    }
+    return (
+      renderSection(t('catalogue.sectionDiseases'), diseasesView) +
+      renderSection(t('catalogue.sectionOtherCauses'), otherView)
+    )
   }
 
   function refresh(): void {
     const tbody = document.getElementById('catalogue-list')
-    if (tbody) tbody.innerHTML = renderRows(getSorted(getFiltered()))
+    if (tbody) tbody.innerHTML = renderRows()
     updateSortIndicators()
   }
 
   function showResult(diseaseId: string): void {
-    const disease = key.diseases[diseaseId]
+    const disease = key.diseases[diseaseId] ?? key.other_causes?.[diseaseId]
     if (!disease) return
 
     const main = document.querySelector('main')
@@ -176,6 +206,16 @@ export async function initCatalogue(): Promise<void> {
   const tbody = document.getElementById('catalogue-list')
   if (tbody) {
     tbody.addEventListener('click', (e) => {
+      const sectionFilter = (e.target as HTMLElement).closest('[data-section-filter]') as HTMLElement | null
+      if (sectionFilter) {
+        const section = sectionFilter.dataset.sectionFilter
+        if (section) {
+          selectedSection = selectedSection === section ? null : section
+          refresh()
+        }
+        return
+      }
+
       const btn = (e.target as HTMLElement).closest('.disease-link-btn') as HTMLElement | null
       if (!btn) return
       const id = btn.dataset.diseaseId
