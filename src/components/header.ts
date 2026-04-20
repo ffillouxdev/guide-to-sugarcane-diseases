@@ -77,6 +77,7 @@ export function header(): string {
                 <input type="checkbox" id="offline-toggle" checked class="accent-green-700 w-4 h-4"/>
                 ${t('nav.offline')}
               </label>
+              <div class="offline-progress hidden px-4 py-2 text-xs text-gray-500 border-b border-gray-100"></div>
               <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
               <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
             </div>
@@ -113,6 +114,7 @@ export function header(): string {
         <input type="checkbox" id="mobile-offline-toggle" checked class="accent-green-700 w-4 h-4"/>
         ${t('nav.offline')}
       </label>
+      <div class="offline-progress hidden px-4 py-2 text-xs text-gray-500 border-b border-gray-100"></div>
       <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
       <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
     </div>
@@ -126,6 +128,14 @@ function isOfflineEnabled(): boolean {
 async function registerSW(): Promise<void> {
   if (!('serviceWorker' in navigator)) return
   await navigator.serviceWorker.register('/sw.js')
+  await navigator.serviceWorker.ready
+  requestImagePrecache()
+}
+
+function requestImagePrecache(): void {
+  const sw = navigator.serviceWorker.controller
+  if (!sw) return
+  sw.postMessage({ type: 'precache-images', lang: i18next.language })
 }
 
 async function unregisterSW(): Promise<void> {
@@ -164,7 +174,10 @@ function bindOfflineToggle(id: string): void {
 export function bindHeaderEvents(onLangChange: () => void): void {
   const select = document.getElementById('lang-select') as HTMLSelectElement | null
   select?.addEventListener('change', () => {
-    i18next.changeLanguage(select.value).then(() => onLangChange())
+    i18next.changeLanguage(select.value).then(() => {
+      onLangChange()
+      requestImagePrecache()
+    })
   })
 
   // Desktop dropdown
@@ -192,4 +205,18 @@ export function bindHeaderEvents(onLangChange: () => void): void {
   // Offline toggles
   bindOfflineToggle('offline-toggle')
   bindOfflineToggle('mobile-offline-toggle')
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data?.type !== 'precache-progress') return
+      const { done, total } = event.data
+      const ready = done >= total
+      const text = ready ? i18next.t('nav.offlineReady') : `${i18next.t('nav.offlineDownloading')} ${done}/${total}`
+      document.querySelectorAll<HTMLElement>('.offline-progress').forEach((el) => {
+        el.textContent = text
+        el.classList.remove('hidden')
+        if (ready) setTimeout(() => el.classList.add('hidden'), 4000)
+      })
+    })
+  }
 }
