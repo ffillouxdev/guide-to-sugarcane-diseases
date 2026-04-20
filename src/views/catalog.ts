@@ -9,13 +9,13 @@ export function catalogueView(): string {
 
   return /*html*/`
     ${header()}
-    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-fixed mt-2 flex flex-col overflow-hidden">
-      <div id="catalogue-list-view" class="flex flex-col min-h-80 flex-1">
+    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 landscape:h-[200vh] portrait:h-[calc(100vh-4.5rem)] md:h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-fixed mt-2 flex flex-col overflow-hidden">
+      <div id="catalogue-list-view" class="flex flex-col min-h-80 flex-1 landscape:bg-blue-500">
         <div class="mb-4 shrink-0">
           <input id="catalogue-search" type="text" placeholder="${t('catalogue.searchPlaceholder')}" class="w-full px-4 py-2 border bg-gray-300/60 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-700" />
         </div>
 
-        <div class="bg-white rounded border overflow-auto flex-1 min-h-0">
+        <div class="bg-white rounded border overflow-auto flex-1 portrait:min-h-0">
           <table class="w-full table-fixed text-sm">
             <thead class="sticky top-0 bg-white">
               <tr class="border-b border-gray-300">
