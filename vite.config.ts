@@ -5,6 +5,10 @@ export default defineConfig({
   server: {
     middlewareMode: false,
   },
+  preview: {
+    host: '0.0.0.0',
+    port: 5174,
+  },
   build: {
     target: 'ES2022',
   },
