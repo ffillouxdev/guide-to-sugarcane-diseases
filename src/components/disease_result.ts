@@ -1,6 +1,19 @@
 import { useT } from '../i18n'
 import type { Disease } from '../data/key-loader'
 
+function formatFilename(path: string): string {
+  const base = (path.split('/').pop() ?? path).replace(/\.(jpe?g|png|webp|gif)$/i, '')
+  const sep = base.lastIndexOf('_')
+  if (sep === -1) return base
+  const disease = base.slice(0, sep)
+    .replace(/^[\d.]+\s+/, '')
+    .replace(/Figure\s+\d+\s*/gi, '')
+    .trim()
+  const photographer = base.slice(sep + 1).trim()
+  if (!disease) return base
+  return `${disease} (${photographer}.)`
+}
+
 export interface DiseaseResultOptions {
   // Optional markup rendered above the title (e.g. breadcrumb for home,
   // simple `result_DiseaseName` label for catalogue).
@@ -47,7 +60,7 @@ function carousel(images: string[]): string {
       </button>
 
       <div class="text-center text-xs text-gray-500 mt-2">
-        <div data-carousel-filename class="font-medium text-gray-600 mb-1">${images.length > 0 ? images[0].split('/').pop() : ''}</div>
+        <div data-carousel-filename class="font-medium text-gray-600 mb-1">${images.length > 0 ? formatFilename(images[0]) : ''}</div>
         <span data-carousel-index>1</span> / ${images.length}
       </div>
     </div>
@@ -117,7 +130,7 @@ export function bindCarousel(root: ParentNode, images: string[]): void {
     idx = (i + images.length) % images.length
     if (img) img.src = images[idx]
     if (idxEl) idxEl.textContent = String(idx + 1)
-    if (filenameEl) filenameEl.textContent = images[idx].split('/').pop() ?? ''
+    if (filenameEl) filenameEl.textContent = formatFilename(images[idx])
   }
 
   prev?.addEventListener('click', () => show(idx - 1))
