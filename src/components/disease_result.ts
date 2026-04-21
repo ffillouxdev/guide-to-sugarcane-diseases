@@ -11,7 +11,7 @@ function formatFilename(path: string): string {
     .trim()
   const photographer = base.slice(sep + 1).trim()
   if (!disease) return base
-  return `${disease} (${photographer}.)`
+  return `${disease} (${photographer})`
 }
 
 export interface DiseaseResultOptions {
