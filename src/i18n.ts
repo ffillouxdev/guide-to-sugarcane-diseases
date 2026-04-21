@@ -40,8 +40,8 @@ const resources = {
         prevImage: 'Previous image',
         nextImage: 'Next image',
         geoLocations: 'Geographical locations',
-        geoWarning: 'If you are not from any of these geographical locations, please contact us!',
-        geoWarningEmail: 'sugarcane@cirad.fr',
+        geoWarning: 'If you observe these symptoms in a location not mentioned below, please contact us!',
+        geoWarningEmail: 'sugarcane-diseases@cirad.fr',
       },
       cta: {
         intro: 'For additionnal information, please see the book',
@@ -112,8 +112,8 @@ const resources = {
         prevImage: 'Image précédente',
         nextImage: 'Image suivante',
         geoLocations: 'Localisations géographiques',
-        geoWarning: "Si vous n'êtes pas originaire de ces zones géographiques, contactez-nous !",
-        geoWarningEmail: 'sugarcane@cirad.fr',
+        geoWarning: "Si vous observez ces symptômes dans un lieu non mentionné ci-dessous, contactez-nous !",
+        geoWarningEmail: 'sugarcane-diseases@cirad.fr',
       },
       cta: {
         intro: 'Pour plus d\'informations, consultez l\'ouvrage',
@@ -184,8 +184,8 @@ const resources = {
         prevImage: 'Imagen anterior',
         nextImage: 'Imagen siguiente',
         geoLocations: 'Ubicaciones geográficas',
-        geoWarning: 'Si no es de ninguna de estas ubicaciones geográficas, ¡contáctenos!',
-        geoWarningEmail: 'sugarcane@cirad.fr',
+        geoWarning: 'Si observa estos síntomas en una ubicación no mencionada a continuación, ¡contáctenos!',
+        geoWarningEmail: 'sugarcane-diseases@cirad.fr',
       },
       cta: {
         intro: 'Para más información, consulte el libro',
