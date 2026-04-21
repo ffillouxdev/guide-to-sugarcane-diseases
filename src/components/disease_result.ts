@@ -40,6 +40,7 @@ function carousel(images: string[]): string {
     return /*html*/`
       <div class="w-full max-w-xl mx-auto mb-6">
         ${frame}
+        ${hasImages ? /*html*/`<div class="text-center text-xs text-gray-500 mt-2"><div class="font-medium text-gray-600">${formatFilename(images[0])}</div></div>` : ''}
       </div>
     `
   }
