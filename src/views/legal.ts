@@ -1,4 +1,4 @@
-import i18next, { useT } from '../i18n'
+import { useT } from '../i18n'
 import { header } from '../layout'
 
 export function legalView(): string {

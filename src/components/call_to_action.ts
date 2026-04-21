@@ -1,4 +1,4 @@
-import i18next, { useT } from '../i18n'
+import { useT } from '../i18n'
 
 export function callToAction(): string {
   const t = useT()
