@@ -155,7 +155,7 @@ export async function initCatalogue(): Promise<void> {
     resultView.innerHTML = diseaseResult(disease, { topSlot })
     bindCarousel(resultView, disease.image ?? [])
 
-    main.classList.remove('h-[calc(100vh-4.5rem)]', 'overflow-hidden', 'flex', 'flex-col')
+    main.classList.remove('md:h-[calc(100vh-4.5rem)]', 'portrait:h-screen', '[@media(orientation:landscape)_and_(max-height:480px)]:h-[200vh]', 'overflow-hidden', 'flex', 'flex-col')
     main.classList.add('min-h-[calc(100vh-4.5rem)]')
     listView.classList.add('hidden')
     resultView.classList.remove('hidden')
@@ -170,7 +170,7 @@ export async function initCatalogue(): Promise<void> {
     const resultView = document.getElementById('catalogue-result-view')
     if (!main || !listView || !resultView) return
 
-    main.classList.add('h-[calc(100vh-4.5rem)]', 'overflow-hidden', 'flex', 'flex-col')
+    main.classList.add('md:h-[calc(100vh-4.5rem)]', 'portrait:h-screen', '[@media(orientation:landscape)_and_(max-height:480px)]:h-[200vh]', 'overflow-hidden', 'flex', 'flex-col')
     main.classList.remove('min-h-[calc(100vh-4.5rem)]')
     resultView.classList.add('hidden')
     resultView.innerHTML = ''
