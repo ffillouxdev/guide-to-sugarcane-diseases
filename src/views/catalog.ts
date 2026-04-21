@@ -1,4 +1,4 @@
-import i18next, { useT } from '../i18n'
+import { useT } from '../i18n'
 import { header } from '../layout'
 import { callToAction } from '../components/call_to_action'
 import { loadKey } from '../data/key-loader'
