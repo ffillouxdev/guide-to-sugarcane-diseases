@@ -78,7 +78,12 @@ export function header(): string {
                 <input type="checkbox" id="offline-toggle" checked class="accent-green-700 w-4 h-4"/>
                 ${t('nav.offline')}
               </label>
-              <div class="offline-progress hidden px-4 py-2 text-xs text-gray-500 border-b border-gray-100"></div>
+              <div class="offline-progress hidden px-4 py-2 border-b border-gray-100">
+                <span class="offline-progress-text text-xs text-gray-500"></span>
+                <div class="w-full bg-gray-200 rounded-full h-1 mt-1.5">
+                  <div class="offline-progress-bar bg-green-600 h-1 rounded-full transition-all duration-300" style="width:0%"></div>
+                </div>
+              </div>
               <a href="${lp('about')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.about')}</a>
               <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
               <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
@@ -116,7 +121,12 @@ export function header(): string {
         <input type="checkbox" id="mobile-offline-toggle" checked class="accent-green-700 w-4 h-4"/>
         ${t('nav.offline')}
       </label>
-      <div class="offline-progress hidden px-4 py-2 text-xs text-gray-500 border-b border-gray-100"></div>
+      <div class="offline-progress hidden px-4 py-2 border-b border-gray-100">
+        <span class="offline-progress-text text-xs text-gray-500"></span>
+        <div class="w-full bg-gray-200 rounded-full h-1 mt-1.5">
+          <div class="offline-progress-bar bg-green-600 h-1 rounded-full transition-all duration-300" style="width:0%"></div>
+        </div>
+      </div>
       <a href="${lp('about')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.about')}</a>
       <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
       <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
@@ -199,10 +209,11 @@ export function bindHeaderEvents(onLangChange: () => void): void {
     mobileMenuDropdown?.classList.toggle('hidden')
   })
 
-  // Close all dropdowns on outside click
-  document.addEventListener('click', () => {
-    menuDropdown?.classList.add('hidden')
-    mobileMenuDropdown?.classList.add('hidden')
+  // Close dropdowns only on outside click (keeps them open during download / inside interactions)
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement
+    if (!menuDropdown?.contains(target)) menuDropdown?.classList.add('hidden')
+    if (!mobileMenuDropdown?.contains(target)) mobileMenuDropdown?.classList.add('hidden')
   })
 
   // Offline toggles
@@ -214,10 +225,16 @@ export function bindHeaderEvents(onLangChange: () => void): void {
       if (event.data?.type !== 'precache-progress') return
       const { done, total } = event.data
       const ready = done >= total
-      const text = ready ? i18next.t('nav.offlineReady') : `${i18next.t('nav.offlineDownloading')} ${done}/${total}`
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0
+      const text = ready
+        ? i18next.t('nav.offlineReady')
+        : `${i18next.t('nav.offlineDownloading')} ${done}/${total}`
       document.querySelectorAll<HTMLElement>('.offline-progress').forEach((el) => {
-        el.textContent = text
         el.classList.remove('hidden')
+        const textEl = el.querySelector('.offline-progress-text')
+        const barEl = el.querySelector<HTMLElement>('.offline-progress-bar')
+        if (textEl) textEl.textContent = text
+        if (barEl) barEl.style.width = `${ready ? 100 : pct}%`
         if (ready) setTimeout(() => el.classList.add('hidden'), 4000)
       })
     })
