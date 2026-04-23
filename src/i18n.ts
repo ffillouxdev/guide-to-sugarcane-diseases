@@ -8,6 +8,7 @@ const resources = {
         home: 'Home',
         catalogue: 'Catalog',
         more: 'More',
+        about: 'About',
         offline: 'Available offline',
         offlineDownloading: 'Downloading',
         offlineReady: 'Ready for offline use ✓',
@@ -70,6 +71,9 @@ const resources = {
         copyrightHeading: 'Copyright',
         copyrightBody: '© CIRAD. All rights reserved. Disease content and images are the property of CIRAD and contributing photographers. Any reproduction, redistribution or commercial use without prior written authorization is prohibited.',
       },
+      about: {
+        title: 'About',
+      },
       questionnaire: {
         prevQuestion: '← Previous question',
       },
@@ -83,6 +87,7 @@ const resources = {
         home: 'Accueil',
         catalogue: 'Catalogue',
         more: 'Plus',
+        about: 'À propos',
         offline: 'Accessible hors connexion',
         offlineDownloading: 'Téléchargement',
         offlineReady: 'Prêt hors connexion ✓',
@@ -145,6 +150,9 @@ const resources = {
         copyrightHeading: 'Droits d\'auteur',
         copyrightBody: '© CIRAD. Tous droits réservés. Les contenus et images des maladies sont la propriété du CIRAD et des photographes contributeurs. Toute reproduction, redistribution ou utilisation commerciale sans autorisation écrite préalable est interdite.',
       },
+      about: {
+        title: 'À propos',
+      },
       questionnaire: {
         prevQuestion: '← Question précédente',
       },
@@ -158,6 +166,7 @@ const resources = {
         home: 'Inicio',
         catalogue: 'Catálogo',
         more: 'Más',
+        about: 'Acerca de',
         offline: 'Disponible sin conexión',
         offlineDownloading: 'Descargando',
         offlineReady: 'Listo sin conexión ✓',
@@ -219,6 +228,9 @@ const resources = {
         creditsBody: 'Basado en el libro "A Guide to Sugarcane Diseases". Aplicación desarrollada para CIRAD.',
         copyrightHeading: 'Derechos de autor',
         copyrightBody: '© CIRAD. Todos los derechos reservados. Los contenidos e imágenes de las enfermedades son propiedad del CIRAD y de los fotógrafos contribuyentes. Se prohíbe toda reproducción, redistribución o uso comercial sin autorización escrita previa.',
+      },
+      about: {
+        title: 'Acerca de',
       },
       questionnaire: {
         prevQuestion: '← Pregunta anterior',
