@@ -15,6 +15,9 @@ const resources = {
         privacy: 'Privacy',
         legal: 'Legal notice',
       },
+      about: {
+        title: 'About',
+      },
       home: {
         title: 'Where do you observe the symptoms on the sugarcane?',
         subtitle: 'A Guide to Sugarcane Diseases',
@@ -71,9 +74,6 @@ const resources = {
         copyrightHeading: 'Copyright',
         copyrightBody: '© CIRAD. All rights reserved. Disease content and images are the property of CIRAD and contributing photographers. Any reproduction, redistribution or commercial use without prior written authorization is prohibited.',
       },
-      about: {
-        title: 'About',
-      },
       questionnaire: {
         prevQuestion: '← Previous question',
       },
@@ -93,6 +93,9 @@ const resources = {
         offlineReady: 'Prêt hors connexion ✓',
         privacy: 'Confidentialité',
         legal: 'Mentions légales',
+      },
+      about: {
+        title: 'À propos',
       },
       home: {
         title: 'Où observez-vous les symptômes sur la canne à sucre ?',
@@ -150,9 +153,6 @@ const resources = {
         copyrightHeading: 'Droits d\'auteur',
         copyrightBody: '© CIRAD. Tous droits réservés. Les contenus et images des maladies sont la propriété du CIRAD et des photographes contributeurs. Toute reproduction, redistribution ou utilisation commerciale sans autorisation écrite préalable est interdite.',
       },
-      about: {
-        title: 'À propos',
-      },
       questionnaire: {
         prevQuestion: '← Question précédente',
       },
@@ -172,6 +172,9 @@ const resources = {
         offlineReady: 'Listo sin conexión ✓',
         privacy: 'Privacidad',
         legal: 'Aviso legal',
+      },
+      about: {
+        title: 'Acerca de',
       },
       home: {
         title: '¿Dónde observa los síntomas en la caña de azúcar?',
@@ -228,9 +231,6 @@ const resources = {
         creditsBody: 'Basado en el libro "A Guide to Sugarcane Diseases". Aplicación desarrollada para CIRAD.',
         copyrightHeading: 'Derechos de autor',
         copyrightBody: '© CIRAD. Todos los derechos reservados. Los contenidos e imágenes de las enfermedades son propiedad del CIRAD y de los fotógrafos contribuyentes. Se prohíbe toda reproducción, redistribución o uso comercial sin autorización escrita previa.',
-      },
-      about: {
-        title: 'Acerca de',
       },
       questionnaire: {
         prevQuestion: '← Pregunta anterior',
