@@ -70,6 +70,9 @@ const resources = {
         copyrightHeading: 'Copyright',
         copyrightBody: '© CIRAD. All rights reserved. Disease content and images are the property of CIRAD and contributing photographers. Any reproduction, redistribution or commercial use without prior written authorization is prohibited.',
       },
+      questionnaire: {
+        prevQuestion: '← Previous question',
+      },
       notFound: 'Page not found',
       backHome: 'Back to home',
     },
@@ -142,6 +145,9 @@ const resources = {
         copyrightHeading: 'Droits d\'auteur',
         copyrightBody: '© CIRAD. Tous droits réservés. Les contenus et images des maladies sont la propriété du CIRAD et des photographes contributeurs. Toute reproduction, redistribution ou utilisation commerciale sans autorisation écrite préalable est interdite.',
       },
+      questionnaire: {
+        prevQuestion: '← Question précédente',
+      },
       notFound: 'Page introuvable',
       backHome: "Retour à l'accueil",
     },
@@ -213,6 +219,9 @@ const resources = {
         creditsBody: 'Basado en el libro "A Guide to Sugarcane Diseases". Aplicación desarrollada para CIRAD.',
         copyrightHeading: 'Derechos de autor',
         copyrightBody: '© CIRAD. Todos los derechos reservados. Los contenidos e imágenes de las enfermedades son propiedad del CIRAD y de los fotógrafos contribuyentes. Se prohíbe toda reproducción, redistribución o uso comercial sin autorización escrita previa.',
+      },
+      questionnaire: {
+        prevQuestion: '← Pregunta anterior',
       },
       notFound: 'Página no encontrada',
       backHome: 'Volver al inicio',

@@ -1,3 +1,4 @@
+import { useT } from '../i18n'
 import { loadKey, type IdentificationKey } from '../data/key-loader'
 import { questionButton } from './question_button'
 import { breadcrumb, type BreadcrumbItem } from './breadcrumb'
@@ -17,6 +18,26 @@ const state: State = {
   listenerAttached: false,
 }
 
+function backButton(): string {
+  if (state.history.length === 0) return ''
+  const t = useT()
+  return /*html*/`
+    <button type="button" data-go-back
+      class="inline-flex items-center gap-1.5 px-4 py-2 mb-3 rounded-lg bg-green-700 text-white text-sm font-medium hover:bg-green-800 transition-colors shadow-sm">
+      ${t('questionnaire.prevQuestion')}
+    </button>
+  `
+}
+
+function goBack(): void {
+  if (state.history.length <= 1) {
+    navigateToBreadcrumb('root')
+  } else {
+    const prev = state.history[state.history.length - 2]
+    navigateToBreadcrumb(prev.nodeId)
+  }
+}
+
 function renderQuestion(): string {
   if (!state.key) return ''
 
@@ -26,6 +47,7 @@ function renderQuestion(): string {
   const buttons = node.options.map(opt => questionButton(opt.label, opt.next)).join('')
 
   return /*html*/`
+    ${backButton()}
     ${breadcrumb(state.history)}
     <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
       ${node.text}
@@ -45,7 +67,7 @@ function renderDisease(): string {
   const disease = lookupDisease(state.currentNodeId)
   if (!disease) return ''
 
-  return diseaseResult(disease, { topSlot: breadcrumb(state.history) })
+  return diseaseResult(disease, { topSlot: backButton() + breadcrumb(state.history) })
 }
 
 function update(): void {
@@ -111,6 +133,14 @@ function navigateToBreadcrumb(nodeId: string): void {
 }
 
 function handleClick(e: MouseEvent): void {
+  // Handle back button click
+  if ((e.target as HTMLElement).closest('[data-go-back]')) {
+    e.preventDefault()
+    e.stopPropagation()
+    goBack()
+    return
+  }
+
   // Handle question button click
   const btn = (e.target as HTMLElement).closest('.question-btn') as HTMLElement | null
   if (btn) {
