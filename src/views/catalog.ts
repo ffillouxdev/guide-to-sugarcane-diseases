@@ -2,7 +2,7 @@ import { useT } from '../i18n'
 import { header } from '../layout'
 import { callToAction } from '../components/call_to_action'
 import { loadKey } from '../data/key-loader'
-import { diseaseResult, bindCarousel } from '../components/disease_result'
+import { diseaseResult, bindCarousel, renderPathogen } from '../components/disease_result'
 
 export function catalogueView(): string {
   const t = useT()
@@ -88,7 +88,7 @@ export async function initCatalogue(): Promise<void> {
     return /*html*/`
       <tr class="hover:bg-gray-50">
         <td class="px-4 py-2">${d.name}</td>
-        <td class="px-4 py-2 text-gray-500 italic truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${d.pathogen ?? ''}">${d.pathogen ?? '—'}</td>
+        <td class="px-4 py-2 text-gray-500 truncate max-w-[8rem] sm:max-w-[12rem] md:max-w-[16rem]" title="${(d.pathogen ?? '').replace(/\*/g, '')}">${d.pathogen ? renderPathogen(d.pathogen) : '—'}</td>
         <td class="px-4 py-2">
           <button type="button" data-disease-id="${d.id}" class="disease-link-btn bg-black text-white text-xs font-medium w-full py-1.5 rounded hover:bg-gray-800 transition-colors">
             ${t('catalogue.linkLabel')}

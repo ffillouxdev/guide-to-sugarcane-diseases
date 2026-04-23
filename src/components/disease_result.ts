@@ -96,6 +96,10 @@ function geoZones(geo: Disease['geo_locations']): string {
   `
 }
 
+export function renderPathogen(text: string): string {
+  return text.replace(/\*([^*]+)\*/g, '<em>$1</em>')
+}
+
 export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {}): string {
   const top = opts.topSlot ?? ''
 
@@ -104,7 +108,7 @@ export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {})
     <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-2">
       ${disease.name}
     </h1>
-    ${disease.pathogen ? /*html*/`<p class="text-sm text-gray-600 text-center italic mb-6">${disease.pathogen}</p>` : '<div class="mb-6"></div>'}
+    ${disease.pathogen ? /*html*/`<p class="text-sm text-gray-600 text-center mb-6">${renderPathogen(disease.pathogen)}</p>` : '<div class="mb-6"></div>'}
     ${carousel(disease.image ?? [])}
     ${geoZones(disease.geo_locations)}
   `
