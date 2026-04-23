@@ -2,6 +2,7 @@ import i18next from './i18n'
 import { bindHeaderEvents, header } from './layout'
 import { homeView } from './views/home'
 import { catalogueView, initCatalogue } from './views/catalog'
+import { aboutView } from './views/about'
 import { privacyView } from './views/privacy'
 import { legalView } from './views/legal'
 import { initQuestionnaire } from './components/questionnaire'
@@ -30,6 +31,10 @@ const routes: Route[] = [
   { path: '/catalogue',       titleKey: 'catalogue.title', view: catalogueView },
   { path: '/catalog',         titleKey: 'catalogue.title', view: catalogueView },
   { path: '/catalogo',        titleKey: 'catalogue.title', view: catalogueView },
+  // About — en / fr / es
+  { path: '/about',           titleKey: 'about.title',     view: aboutView },
+  { path: '/a-propos',        titleKey: 'about.title',     view: aboutView },
+  { path: '/acerca-de',       titleKey: 'about.title',     view: aboutView },
   // Privacy — en / fr / es
   { path: '/privacy',         titleKey: 'privacy.title',   view: privacyView },
   { path: '/confidentialite', titleKey: 'privacy.title',   view: privacyView },

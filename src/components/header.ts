@@ -8,6 +8,7 @@ const languages = [
 
 const localizedPaths: Record<string, Record<string, string>> = {
   catalogue: { en: '/catalog',  fr: '/catalogue', es: '/catalogo' },
+  about:     { en: '/about',    fr: '/a-propos',  es: '/acerca-de' },
   privacy:   { en: '/privacy',  fr: '/confidentialite', es: '/privacidad' },
   legal:     { en: '/legal',    fr: '/mentions-legales', es: '/aviso-legal' },
 }
@@ -78,6 +79,7 @@ export function header(): string {
                 ${t('nav.offline')}
               </label>
               <div class="offline-progress hidden px-4 py-2 text-xs text-gray-500 border-b border-gray-100"></div>
+              <a href="${lp('about')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.about')}</a>
               <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
               <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
             </div>
@@ -115,6 +117,7 @@ export function header(): string {
         ${t('nav.offline')}
       </label>
       <div class="offline-progress hidden px-4 py-2 text-xs text-gray-500 border-b border-gray-100"></div>
+      <a href="${lp('about')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.about')}</a>
       <a href="${lp('privacy')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.privacy')}</a>
       <a href="${lp('legal')}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">${t('nav.legal')}</a>
     </div>
