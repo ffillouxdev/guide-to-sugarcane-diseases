@@ -47,18 +47,20 @@ function carousel(images: string[]): string {
 
   // Multiple images: full carousel with arrows and counter.
   return /*html*/`
-    <div class="relative w-full max-w-xl mx-auto mb-6" data-carousel>
-      <button type="button" data-carousel-prev aria-label="${t('result.prevImage')}"
-        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white">
-        <span class="text-lg leading-none">‹</span>
-      </button>
+    <div class="w-full max-w-xl mx-auto mb-6" data-carousel>
+      <div class="relative">
+        <button type="button" data-carousel-prev aria-label="${t('result.prevImage')}"
+          class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white">
+          <span class="text-lg leading-none">‹</span>
+        </button>
 
-      ${frame}
+        ${frame}
 
-      <button type="button" data-carousel-next aria-label="${t('result.nextImage')}"
-        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white">
-        <span class="text-lg leading-none">›</span>
-      </button>
+        <button type="button" data-carousel-next aria-label="${t('result.nextImage')}"
+          class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-300 shadow flex items-center justify-center hover:bg-white">
+          <span class="text-lg leading-none">›</span>
+        </button>
+      </div>
 
       <div class="text-center text-xs text-gray-500 mt-2">
         <div data-carousel-filename class="font-medium text-gray-600 mb-1">${images.length > 0 ? formatFilename(images[0]) : ''}</div>
