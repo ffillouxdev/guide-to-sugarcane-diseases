@@ -9,9 +9,9 @@ function formatFilename(path: string): string {
     .replace(/^[\d.]+\s+/, '')
     .replace(/Figure\s+\d+\s*/gi, '')
     .trim()
-  const photographer = base.slice(sep + 1).trim()
+  const photographer = base.slice(sep + 1).trim().replace(/\.(jpe?g|png|gif|webp)$/i, '')
   if (!disease) return base
-  return `${disease} (${photographer})`
+  return `(© ${photographer})`
 }
 
 export interface DiseaseResultOptions {
@@ -20,7 +20,7 @@ export interface DiseaseResultOptions {
   topSlot?: string
 }
 
-function carousel(images: string[]): string {
+function carousel(images: string[], diseaseName: string): string {
   const t = useT()
   const hasImages = images.length > 0
   const hasMultiple = images.length > 1
@@ -29,7 +29,7 @@ function carousel(images: string[]): string {
   const frame = /*html*/`
     <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
       ${hasImages
-        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="" loading="lazy" class="w-full h-full object-cover" />`
+        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="${diseaseName} image" loading="lazy" class="w-full h-full object-cover" />`
         : /*html*/`<span class="text-gray-400 text-sm italic">${t('result.noImage')}</span>`
       }
     </div>
@@ -40,12 +40,12 @@ function carousel(images: string[]): string {
     return /*html*/`
       <div class="w-full max-w-xl mx-auto mb-6">
         ${frame}
-        ${hasImages ? /*html*/`<div class="text-center text-xs text-gray-500 mt-2"><div class="font-medium text-gray-600">${formatFilename(images[0])}</div></div>` : ''}
+        ${hasImages ? /*html*/`<div class="text-center text-xs text-gray-500 mt-2">${formatFilename(images[0])}</div>` : ''}
       </div>
     `
   }
 
-  // Multiple images: full carousel with arrows and counter.
+  // Multiple images: full carousel with arrows.
   return /*html*/`
     <div class="w-full max-w-xl mx-auto mb-6" data-carousel>
       <div class="relative">
@@ -63,8 +63,8 @@ function carousel(images: string[]): string {
       </div>
 
       <div class="text-center text-xs text-gray-500 mt-2">
-        <div data-carousel-filename class="font-medium text-gray-600 mb-1">${images.length > 0 ? formatFilename(images[0]) : ''}</div>
-        <span data-carousel-index>1</span> / ${images.length}
+        <div><span data-carousel-index>1</span> / ${images.length}</div>
+        <div data-carousel-filename>${images.length > 0 ? formatFilename(images[0]) : ''}</div>
       </div>
     </div>
   `
@@ -111,7 +111,7 @@ export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {})
       ${disease.name}
     </h1>
     ${disease.pathogen ? /*html*/`<p class="text-sm text-gray-600 text-center mb-6">${renderPathogen(disease.pathogen)}</p>` : '<div class="mb-6"></div>'}
-    ${carousel(disease.image ?? [])}
+    ${carousel(disease.image ?? [], disease.name)}
     ${geoZones(disease.geo_locations)}
   `
 }
