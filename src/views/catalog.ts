@@ -53,7 +53,7 @@ export async function initCatalogue(): Promise<void> {
   type SortKey = 'name' | 'pathogen'
   type SortDir = 'asc' | 'desc'
 
-  const diseases: Entry[] = Object.entries(key.diseases).map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionDiseases') }))
+  const diseases: Entry[] = Object.entries(key.diseases).filter(([id]) => id !== 'D_no_convincing_result').map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionDiseases') }))
   const otherCauses: Entry[] = Object.entries(key.other_causes ?? {}).map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionOtherCauses') }))
   let sortKey: SortKey = 'name'
   let sortDir: SortDir = 'asc'
