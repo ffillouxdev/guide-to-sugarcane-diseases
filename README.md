@@ -88,10 +88,6 @@ The `public/datas/` folder is **gitignored** and must be provided separately by 
 
 The loader (`src/data/key-loader.ts`) falls back to the English key when a translated key is empty.
 
-## Browser Support
-
-Modern evergreen browsers (Chromium ≥ 100, Firefox ≥ 100, Safari ≥ 15). Service Worker support is required for offline functionality.
-
 ## Credits
 
 Based on the book *A Guide to Sugarcane Diseases*, edited by Philippe Rott, Jean-Claude Girard and Jean Heinrich Daugrois, published by [Éditions Quæ](https://www.quae.com/produit/78/9782876143869/a-guide-to-sugarcane-diseases).
