@@ -103,8 +103,3 @@ Proprietary — © CIRAD. All rights reserved. Disease content and images are th
 ## Author
 
 Developed by **[ffillouxdev](https://github.com/ffillouxdev)** for CIRAD.
-
-## Related Documents
-
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guidelines
-- [CHANGELOG.md](./CHANGELOG.md) — Release history
