@@ -2,7 +2,7 @@ import { useT } from '../i18n'
 import { header } from '../layout'
 import { callToAction } from '../components/call_to_action'
 import { loadKey } from '../data/key-loader'
-import { diseaseResult, bindCarousel, renderPathogen } from '../components/disease_result'
+import { diseaseResult, bindCarousel, renderPathogen, formatResultLabel } from '../components/disease_result'
 export function catalogueView(): string {
   const t = useT()
 
@@ -166,7 +166,7 @@ export async function initCatalogue(): Promise<void> {
     const resultView = document.getElementById('catalogue-result-view')
     if (!main || !listView || !resultView) return
 
-    const resultLabel = `result_${disease.name.replace(/\s+/g, '_')}`
+    const resultLabel = formatResultLabel(disease.name)
     const topSlot = /*html*/`
       <nav class="text-xs text-gray-500 mb-4 flex items-center justify-between gap-4">
         <button type="button" id="catalogue-back" class="hover:underline text-gray-700">${t('catalogue.backToList')}</button>

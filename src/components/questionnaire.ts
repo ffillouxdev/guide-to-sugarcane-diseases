@@ -2,7 +2,7 @@ import { useT } from '../i18n'
 import { loadKey, type IdentificationKey } from '../data/key-loader'
 import { questionButton } from './question_button'
 import { breadcrumb, type BreadcrumbItem } from './breadcrumb'
-import { diseaseResult, bindCarousel } from './disease_result'
+import { diseaseResult, bindCarousel, formatResultLabel } from './disease_result'
 
 interface State {
   key: IdentificationKey | null
@@ -96,7 +96,7 @@ function navigateTo(nodeId: string, label: string): void {
   // For diseases, add result item to breadcrumb only
   if (nodeId.startsWith('D_') && state.key) {
     const diseaseName = lookupDisease(nodeId)?.name || label
-    const resultLabel = `result_${diseaseName.replace(/\s+/g, '_')}`
+    const resultLabel = formatResultLabel(diseaseName)
     state.history.push({ label: resultLabel, nodeId })
   } else {
     state.history.push({ label, nodeId })
