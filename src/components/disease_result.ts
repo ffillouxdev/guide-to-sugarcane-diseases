@@ -79,7 +79,7 @@ function geoZones(geo: Disease['geo_locations']): string {
     for (const [continent, countries] of Object.entries(entry)) {
       const countries_html = countries.map(c => /*html*/`<li class="text-sm text-gray-700">${c}</li>`).join('')
       details.push(/*html*/`
-        <details class="border-b border-white py-2">
+        <details class="border-b border-gray-400 py-2">
           <summary class="font-medium cursor-pointer hover:text-green-700">${continent}</summary>
           <ul class="list-disc list-inside mt-2 ml-2 space-y-0.5">
             ${countries_html}
