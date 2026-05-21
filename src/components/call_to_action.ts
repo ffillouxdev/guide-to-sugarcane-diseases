@@ -1,7 +1,14 @@
 import { useT } from '../i18n'
 
-export function callToAction(): string {
+export function callToAction(showCiradBadge = false): string {
   const t = useT()
+
+  const ciradBadge = showCiradBadge ? /*html*/`
+    <a href="https://www.cirad.fr/" target="_blank" rel="noopener noreferrer"
+       class="mt-4 inline-flex items-center gap-2 bg-white/80 rounded border border-gray-200 px-3 py-1.5 shadow-sm hover:bg-white transition-colors">
+      <img src="/assets/logo-cirad.svg" alt="CIRAD" class="h-6 w-auto" />
+    </a>
+  ` : ''
 
   return /*html*/`
     <section class="w-full py-10 pb-20">
@@ -16,6 +23,7 @@ export function callToAction(): string {
             <span class="md:hidden">${t('cta.buttonMobile')}</span>
             <span class="hidden md:inline">${t('cta.buttonDesktop')}</span>
           </a>
+          ${ciradBadge}
         </div>
         <img src="/assets/a_guide_to_sugarcane-img.png" alt="${t('cta.bookTitle')}" class="w-24 rounded" />
       </div>
