@@ -50,10 +50,12 @@
   font-display: swap;
 }
 
-body {
-  font-family: 'Myriad Pro', ui-sans-serif, system-ui, sans-serif;
-}
+@layer base {
+  body {
+    font-family: 'Myriad Pro', ui-sans-serif, system-ui, sans-serif;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Frutiger LT Pro', ui-sans-serif, system-ui, sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Frutiger LT Pro', ui-sans-serif, system-ui, sans-serif;
+  }
 }

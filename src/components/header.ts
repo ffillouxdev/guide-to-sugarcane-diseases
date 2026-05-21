@@ -52,7 +52,7 @@ export function header(): string {
 
         <!-- Logo -->
         <a href="/" class="flex flex-col gap-1 mr-8 shrink-0">
-          <span class="font-bold text-lg text-gray-900 leading-none">CaneDr</span>
+          <span class="font-bold text-lg text-gray-900 leading-none" style="font-family:'Frutiger LT Pro',sans-serif">CaneDr</span>
           <span class="text-xs text-gray-500 leading-none">v2.0.0</span>
         </a>
 
