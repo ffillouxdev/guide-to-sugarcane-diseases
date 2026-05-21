@@ -106,6 +106,20 @@ export function renderPathogen(text: string): string {
   return text.replace(/\*([^*]+)\*/g, '<em>$1</em>')
 }
 
+// Builds the `result_<name>` breadcrumb label shown above the disease view.
+// Strips cross-reference parentheticals (e.g. "(see also X; Y)") that bloat
+// names like "Basal stem, root and sheath rot(see also ...; ...; ...)", then
+// caps to 40 chars with an ellipsis as a safety net.
+const PARENTHETICAL_RE = /\s*\([^)]*\)/g
+const RESULT_LABEL_MAX = 40
+export function formatResultLabel(name: string): string {
+  let compact = name.replace(PARENTHETICAL_RE, '').trim()
+  if (compact.length > RESULT_LABEL_MAX) {
+    compact = compact.slice(0, RESULT_LABEL_MAX).trimEnd() + '…'
+  }
+  return `result_${compact.replace(/\s+/g, '_')}`
+}
+
 export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {}): string {
   const top = opts.topSlot ?? ''
 
