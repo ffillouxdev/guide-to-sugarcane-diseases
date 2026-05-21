@@ -18,7 +18,7 @@ D-CAS 2.0 (*Détermination et Catalogue des Affections de la canne à Sucre*) is
 | -------------- | --------------------------------------------------------- |
 | Language       | TypeScript (strict mode)                                  |
 | Bundler        | [Vite 5](https://vitejs.dev/)                             |
-| Styling        | [Tailwind CSS 3](https://tailwindcss.com/) + PostCSS      |
+| Styling        | [Tailwind CSS 4](https://tailwindcss.com/) + PostCSS      |
 | i18n           | [i18next](https://www.i18next.com/) + browser detector    |
 | Routing        | Custom client-side router (`src/router.ts`)               |
 | Offline        | Native Service Worker (`public/sw.js`)                    |
@@ -65,7 +65,7 @@ D-CAS-2.0/
 ├── src/
 │   ├── components/            # Reusable UI pieces (header, questionnaire, ...)
 │   ├── data/                  # Data loaders (key-loader.ts)
-│   ├── views/                 # Page-level views (home, catalog, privacy, legal)
+│   ├── views/                 # Page-level views (home, catalog, about, privacy, legal)
 │   ├── i18n.ts                # Translation resources & language detection
 │   ├── layout.ts              # Shared layout exports
 │   ├── router.ts              # Client-side router
