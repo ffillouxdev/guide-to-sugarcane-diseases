@@ -3,16 +3,15 @@ import { header } from '../layout'
 import { callToAction } from '../components/call_to_action'
 import { loadKey } from '../data/key-loader'
 import { diseaseResult, bindCarousel, renderPathogen } from '../components/disease_result'
-
 export function catalogueView(): string {
   const t = useT()
 
   return /*html*/`
     ${header()}
-    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 [@media(orientation:landscape)_and_(max-height:480px)]:h-[200vh] portrait:h-screen md:h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-fixed mt-2 flex flex-col overflow-hidden">
+    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 [@media(orientation:landscape)_and_(max-height:480px)]:h-[200vh] portrait:h-screen md:h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-no-repeat bg-fixed mt-2 flex flex-col overflow-hidden">
       <div id="catalogue-list-view" class="flex flex-col min-h-80 flex-1">
         <div class="mb-4 shrink-0">
-          <input id="catalogue-search" type="text" placeholder="${t('catalogue.searchPlaceholder')}" class="w-full px-4 py-2 border bg-gray-300/60 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-700" />
+          <input id="catalogue-search" type="text" placeholder="${t('catalogue.searchPlaceholder')}" class="w-full px-4 py-2 border border-gray-400 bg-white rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-700" />
         </div>
 
         <div class="bg-white rounded border overflow-auto flex-1 portrait:min-h-0">
@@ -22,7 +21,7 @@ export function catalogueView(): string {
                 <th data-sort="name" class="text-left px-4 py-2 md:py-3 text-xs md:text-sm font-semibold cursor-pointer select-none hover:bg-gray-50">
                   ${t('catalogue.diseaseNameColumn')} <span id="sort-name" class="text-gray-400">↕</span>
                 </th>
-                <th data-sort="pathogen" class="text-left px-4 py-2 md:py-3 text-xs md:text-sm font-semibold cursor-pointer select-none hover:bg-gray-50" title="${t('catalogue.pathogenColumn')}">
+                <th id="th-pathogen" data-sort="pathogen" class="text-left px-4 py-2 md:py-3 text-xs md:text-sm font-semibold cursor-pointer select-none hover:bg-gray-50" title="${t('catalogue.pathogenColumn')}">
                   ${t('catalogue.pathogenColumnShort')} <span class="hidden md:inline">${t('catalogue.pathogenSynonym')}</span> <span id="sort-pathogen" class="text-gray-400">↕</span>
                 </th>
                 <th class="text-left px-4 py-3 font-semibold w-24"></th>
@@ -37,7 +36,7 @@ export function catalogueView(): string {
 
       <div id="catalogue-result-view" class="hidden"></div>
 
-      ${callToAction()}
+      ${callToAction(true)}
     </main>
   `
 }
@@ -54,7 +53,7 @@ export async function initCatalogue(): Promise<void> {
   type SortDir = 'asc' | 'desc'
 
   const diseases: Entry[] = Object.entries(key.diseases).filter(([id]) => id !== 'D_no_convincing_result').map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionDiseases') }))
-  const otherCauses: Entry[] = Object.entries(key.other_causes ?? {}).map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionOtherCauses') }))
+  const otherCauses: Entry[] = Object.entries(key.other_causes ?? {}).filter(([id]) => id !== 'D_borer_attack_in_nursery').map(([id, d]) => ({ ...d, id, section: t('catalogue.sectionOtherCauses') }))
   let sortKey: SortKey = 'name'
   let sortDir: SortDir = 'asc'
   let query = ''
@@ -133,6 +132,8 @@ export async function initCatalogue(): Promise<void> {
     const tbody = document.getElementById('catalogue-list')
     if (tbody) tbody.innerHTML = renderRows()
     updateSortIndicators()
+    const thPathogen = document.getElementById('th-pathogen')
+    if (thPathogen) thPathogen.style.display = selectedSection === t('catalogue.sectionOtherCauses') ? 'none' : ''
   }
 
   function showResult(diseaseId: string): void {
