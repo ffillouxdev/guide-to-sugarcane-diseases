@@ -24,7 +24,7 @@ export function catalogueView(): string {
                 <th id="th-pathogen" data-sort="pathogen" class="text-left px-4 py-2 md:py-3 text-xs md:text-sm font-semibold cursor-pointer select-none hover:bg-gray-50" title="${t('catalogue.pathogenColumn')}">
                   ${t('catalogue.pathogenColumnShort')} <span class="hidden md:inline">${t('catalogue.pathogenSynonym')}</span> <span id="sort-pathogen" class="text-gray-400">↕</span>
                 </th>
-                <th class="text-left px-4 py-3 font-semibold w-24"></th>
+                <th class="text-left px-4 py-3 font-semibold w-28"></th>
               </tr>
             </thead>
             <tbody id="catalogue-list" class="divide-y divide-gray-100">
@@ -132,8 +132,29 @@ export async function initCatalogue(): Promise<void> {
     const tbody = document.getElementById('catalogue-list')
     if (tbody) tbody.innerHTML = renderRows()
     updateSortIndicators()
+
+    // Hide pathogen header when only other causes are visible
+    let visibleDiseases = filterEntries(diseases)
+    let visibleOther = filterEntries(otherCauses)
+    if (selectedSection !== null) {
+      visibleDiseases = selectedSection === t('catalogue.sectionDiseases') ? visibleDiseases : []
+      visibleOther = selectedSection === t('catalogue.sectionOtherCauses') ? visibleOther : []
+    }
+    const onlyOtherCauses = visibleDiseases.length === 0 && visibleOther.length > 0
+
     const thPathogen = document.getElementById('th-pathogen')
-    if (thPathogen) thPathogen.style.display = selectedSection === t('catalogue.sectionOtherCauses') ? 'none' : ''
+    if (thPathogen) {
+      if (onlyOtherCauses) {
+        thPathogen.innerHTML = '<span class="text-gray-400 text-base">×</span>'
+        thPathogen.removeAttribute('data-sort')
+        thPathogen.classList.remove('cursor-pointer', 'hover:bg-gray-50')
+      } else {
+        thPathogen.innerHTML = `${t('catalogue.pathogenColumnShort')} <span class="hidden md:inline">${t('catalogue.pathogenSynonym')}</span> <span id="sort-pathogen" class="text-gray-400">↕</span>`
+        thPathogen.setAttribute('data-sort', 'pathogen')
+        thPathogen.classList.add('cursor-pointer', 'hover:bg-gray-50')
+      }
+      thPathogen.style.display = ''
+    }
   }
 
   function showResult(diseaseId: string): void {

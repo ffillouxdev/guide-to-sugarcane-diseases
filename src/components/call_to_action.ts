@@ -5,7 +5,7 @@ export function callToAction(showCiradBadge = false): string {
 
   const ciradBadge = showCiradBadge ? /*html*/`
     <a href="https://www.cirad.fr/" target="_blank" rel="noopener noreferrer"
-       class="mt-4 inline-flex items-center gap-2 bg-white/80 rounded border border-gray-200 px-3 py-1.5 shadow-sm hover:bg-white transition-colors">
+       class="mt-4 flex items-center gap-2 bg-white/80 rounded border border-gray-200 px-3 py-1.5 shadow-sm hover:bg-white transition-colors w-fit">
       <img src="/assets/logo-cirad.svg" alt="CIRAD" class="h-6 w-auto" />
     </a>
   ` : ''
