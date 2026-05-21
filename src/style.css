@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Frutiger LT Pro';
+  src: url('/assets/fonts/frutiger-lt-pro-cufonfonts/Linotype  FrutigerLTProRoman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Frutiger LT Pro';
+  src: url('/assets/fonts/frutiger-lt-pro-cufonfonts/Linotype  FrutigerLTProBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Frutiger LT Pro';
+  src: url('/assets/fonts/frutiger-lt-pro-cufonfonts/Linotype  FrutigerLTProItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Frutiger LT Pro';
+  src: url('/assets/fonts/frutiger-lt-pro-cufonfonts/Linotype  FrutigerLTProBoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('/assets/fonts/myriad-pro-cufonfonts/MYRIADPRO-REGULAR.OTF') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('/assets/fonts/myriad-pro-cufonfonts/MYRIADPRO-BOLD.OTF') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Myriad Pro', ui-sans-serif, system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Frutiger LT Pro', ui-sans-serif, system-ui, sans-serif;
+}
