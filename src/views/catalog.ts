@@ -1,4 +1,5 @@
 import { useT } from '../i18n'
+import { header } from '../layout'
 import { callToAction } from '../components/call_to_action'
 import { loadKey } from '../data/key-loader'
 import { diseaseResult, bindCarousel, renderPathogen } from '../components/disease_result'
@@ -6,6 +7,7 @@ export function catalogueView(): string {
   const t = useT()
 
   return /*html*/`
+    ${header()}
     <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 [@media(orientation:landscape)_and_(max-height:480px)]:h-[200vh] portrait:h-screen md:h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-no-repeat bg-fixed mt-2 flex flex-col overflow-hidden">
       <div id="catalogue-list-view" class="flex flex-col min-h-80 flex-1">
         <div class="mb-4 shrink-0">
