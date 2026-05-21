@@ -49,7 +49,7 @@ const resources = {
         sectionOtherCauses: 'Other causes',
       },
       result: {
-        noImage: 'No image available (please contact the webmaster at sugarcane-diseases@cirad.fr if you have a photograph for this disease or disorder)',
+        noImage: 'No image available<br>(please contact the webmaster at sugarcane-diseases@cirad.fr if you have a photograph for this disease or disorder)',
         prevImage: 'Previous image',
         nextImage: 'Next image',
         geoLocations: 'Geographical locations',
@@ -137,7 +137,7 @@ const resources = {
         sectionOtherCauses: 'Autres causes',
       },
       result: {
-        noImage: 'Aucune image disponible (veuillez contacter le webmaster à sugarcane-diseases@cirad.fr si vous avez une photographie pour cette maladie ou ce désordre)',
+        noImage: 'Aucune image disponible<br>(veuillez contacter le webmaster à sugarcane-diseases@cirad.fr si vous avez une photographie pour cette maladie ou ce désordre)',
         prevImage: 'Image précédente',
         nextImage: 'Image suivante',
         geoLocations: 'Localisations géographiques',
@@ -225,7 +225,7 @@ const resources = {
         sectionOtherCauses: 'Otras causas',
       },
       result: {
-        noImage: 'Sin imagen disponible (por favor, contacte al webmaster en sugarcane-diseases@cirad.fr si dispone de una fotografía para esta enfermedad o desorden)',
+        noImage: 'Sin imagen disponible<br>(por favor, contacte al webmaster en sugarcane-diseases@cirad.fr si dispone de una fotografía para esta enfermedad o desorden)',
         prevImage: 'Imagen anterior',
         nextImage: 'Imagen siguiente',
         geoLocations: 'Ubicaciones geográficas',
