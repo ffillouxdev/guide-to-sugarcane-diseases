@@ -17,6 +17,15 @@ const resources = {
       },
       about: {
         title: 'About',
+        introHeading: 'About this website',
+        introBody: 'This website on identification of sugarcane diseases is an interactive and easy-to-use tool containing an identification system for sugarcane diseases and disorders distributed worldwide. It is based on the book "A guide to sugarcane diseases" (second edition) published by QUAE (Philippe Rott, Jean-Claude Girard, and Jean Heinrich Daugrois, scientific editors). This scientific knowledge base contains the description of more than 80 diseases and disorders of sugarcane including 500 colour photographs.',
+        creditsHeading: 'Credits',
+        creditsDevelopment: 'Developed by <a href="https://github.com/ffillouxdev" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">FILLOUX Florian</a> under the direction of <a href="https://github.com/frederic-mahe" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">MAHÉ Frédéric</a> and <a href="https://orcid.org/0000-0001-6085-6159" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">ROTT Philippe</a>.',
+        creditsPhotographers: 'We wish to thank all the persons who contributed photos to the website.',
+        creditsCiradIntro: 'Published by',
+        creditsCiradName: 'CIRAD',
+        creditsCiradDescription: 'French agricultural research and cooperation organisation working for the sustainable development of tropical and Mediterranean regions.',
+        creditsCiradLink: 'Visit cirad.fr',
       },
       home: {
         title: 'Where do you observe the symptoms on the sugarcane?',
@@ -40,7 +49,7 @@ const resources = {
         sectionOtherCauses: 'Other causes',
       },
       result: {
-        noImage: 'No image available',
+        noImage: 'No image available (please contact the webmaster at sugarcane-diseases@cirad.fr if you have a photograph for this disease or disorder)',
         prevImage: 'Previous image',
         nextImage: 'Next image',
         geoLocations: 'Geographical locations',
@@ -96,6 +105,15 @@ const resources = {
       },
       about: {
         title: 'À propos',
+        introHeading: 'À propos de ce guide',
+        introBody: "Ce guide web sur les maladies de la canne à sucre est un outil interactif et facile à utiliser, contenant un système d'identification de maladies et désordres affectant la canne à sucre dans le monde entier. Il est basé sur l'ouvrage « A guide to sugarcane diseases » (seconde édition) publié par QUAE (Philippe Rott, Jean-Claude Girard et Jean Heinrich Daugrois, éditeurs scientifiques). Cette base de connaissances scientifique contient la description de plus de 80 maladies et désordres de la canne à sucre, ainsi que 500 photographies couleur.",
+        creditsHeading: 'Crédits',
+        creditsDevelopment: 'Développé par <a href="https://github.com/ffillouxdev" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">FILLOUX Florian</a> sous la direction de <a href="https://github.com/frederic-mahe" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">MAHÉ Frédéric</a> et de <a href="https://orcid.org/0000-0001-6085-6159" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">ROTT Philippe</a>.',
+        creditsPhotographers: 'Nous tenons à remercier toutes les personnes qui ont contribué des photos au guide web.',
+        creditsCiradIntro: 'Édité par',
+        creditsCiradName: 'CIRAD',
+        creditsCiradDescription: 'Centre de coopération internationale en recherche agronomique pour le développement, œuvrant pour le développement durable des régions tropicales et méditerranéennes.',
+        creditsCiradLink: 'Visiter cirad.fr',
       },
       home: {
         title: 'Où observez-vous les symptômes sur la canne à sucre ?',
@@ -119,7 +137,7 @@ const resources = {
         sectionOtherCauses: 'Autres causes',
       },
       result: {
-        noImage: 'Aucune image disponible',
+        noImage: 'Aucune image disponible (veuillez contacter le webmaster à sugarcane-diseases@cirad.fr si vous avez une photographie pour cette maladie ou ce désordre)',
         prevImage: 'Image précédente',
         nextImage: 'Image suivante',
         geoLocations: 'Localisations géographiques',
@@ -175,6 +193,15 @@ const resources = {
       },
       about: {
         title: 'Acerca de',
+        introHeading: 'Acerca de este sitio web',
+        introBody: 'Este sitio web sobre identificación de enfermedades de la caña de azúcar es una herramienta interactiva y fácil de usar, que contiene un sistema de identificación de enfermedades y desórdenes que afectan a la caña de azúcar en todo el mundo. Está basado en el libro «A guide to sugarcane diseases» (segunda edición) publicado por QUAE (Philippe Rott, Jean-Claude Girard y Jean Heinrich Daugrois, editores científicos). Esta base de conocimientos científicos contiene la descripción de más de 80 enfermedades y desórdenes de la caña de azúcar, junto con 500 fotografías en color.',
+        creditsHeading: 'Créditos',
+        creditsDevelopment: 'Desarrollado por <a href="https://github.com/ffillouxdev" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">FILLOUX Florian</a> bajo la dirección de <a href="https://github.com/frederic-mahe" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">MAHÉ Frédéric</a> y <a href="https://orcid.org/0000-0001-6085-6159" target="_blank" rel="noopener noreferrer" class="font-semibold text-green-700 hover:underline">ROTT Philippe</a>.',
+        creditsPhotographers: 'Agradecemos a todas las personas que contribuyeron con fotos al sitio web.',
+        creditsCiradIntro: 'Editado por',
+        creditsCiradName: 'CIRAD',
+        creditsCiradDescription: 'Centro de cooperación internacional en investigación agronómica para el desarrollo, dedicado al desarrollo sostenible de las regiones tropicales y mediterráneas.',
+        creditsCiradLink: 'Visitar cirad.fr',
       },
       home: {
         title: '¿Dónde observa los síntomas en la caña de azúcar?',
@@ -198,7 +225,7 @@ const resources = {
         sectionOtherCauses: 'Otras causas',
       },
       result: {
-        noImage: 'Sin imagen disponible',
+        noImage: 'Sin imagen disponible (por favor, contacte al webmaster en sugarcane-diseases@cirad.fr si dispone de una fotografía para esta enfermedad o desorden)',
         prevImage: 'Imagen anterior',
         nextImage: 'Imagen siguiente',
         geoLocations: 'Ubicaciones geográficas',
