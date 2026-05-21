@@ -17,7 +17,7 @@ const notFoundView = () => {
   const t = i18next.t.bind(i18next)
   return /*html*/`
     ${header()}
-    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 min-h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center mt-2">
+    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 min-h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-no-repeat mt-2">
       <h1 class="text-3xl text-center font-bold text-gray-900">${t('notFound')}</h1>
       <button onclick="history.back()" class="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition-colors block mx-auto">${t('backHome')}</button>
     </main>
@@ -53,7 +53,7 @@ function render(app: HTMLElement): void {
   const route = resolve(window.location.pathname)
   const t = i18next.t.bind(i18next)
 
-  document.title = `${t(route.titleKey)} — D-CAS 2.0`
+  document.title = `${t(route.titleKey)} — CaneDr`
   document.documentElement.lang = i18next.language
 
   app.innerHTML = route.view()
