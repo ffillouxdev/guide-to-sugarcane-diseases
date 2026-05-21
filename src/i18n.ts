@@ -268,7 +268,7 @@ const resources = {
   },
 }
 
-await i18next
+i18next
   .use(LanguageDetector)
   .init({
     resources,

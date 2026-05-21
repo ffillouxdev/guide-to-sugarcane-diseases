@@ -1,8 +1,9 @@
-const CACHE_NAME = 'dcas-v3'
+const CACHE_NAME = 'dcas-v4'
 
 const APP_SHELL = [
   '/',
   '/index.html',
+  '/assets/favicon.ico',
   '/datas/identification-key.json',
   '/datas/cle-identification.json',
   '/datas/clave-de-identificacion.json',
@@ -14,12 +15,32 @@ const LANG_FILES = {
   es: '/datas/clave-de-identificacion.json',
 }
 
+// Reads Vite's build manifest at install time and adds the hashed JS/CSS
+// bundles to the precache. Falls back gracefully in dev (no manifest).
+async function getViteBundleAssets() {
+  try {
+    const res = await fetch('/.vite/manifest.json', { cache: 'no-cache' })
+    if (!res.ok) return []
+    const manifest = await res.json()
+    const urls = new Set()
+    for (const entry of Object.values(manifest)) {
+      if (entry.file) urls.add('/' + entry.file)
+      if (Array.isArray(entry.css)) entry.css.forEach((f) => urls.add('/' + f))
+      if (Array.isArray(entry.assets)) entry.assets.forEach((f) => urls.add('/' + f))
+    }
+    return [...urls]
+  } catch {
+    return []
+  }
+}
+
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) =>
-      Promise.all(APP_SHELL.map((url) => cache.add(url).catch(() => {})))
-    )
-  )
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME)
+    const bundles = await getViteBundleAssets()
+    const all = [...new Set([...APP_SHELL, ...bundles])]
+    await Promise.all(all.map((url) => cache.add(url).catch(() => {})))
+  })())
   self.skipWaiting()
 })
 
@@ -35,7 +56,7 @@ self.addEventListener('activate', (event) => {
 function isImageRequest(request) {
   const url = new URL(request.url)
   return url.pathname.startsWith('/datas/diseases-img/') ||
-         url.pathname.startsWith('/assets/') && /\.(png|jpg|jpeg|webp|svg|gif)$/i.test(url.pathname)
+         (url.pathname.startsWith('/assets/') && /\.(png|jpg|jpeg|webp|svg|gif|ico)$/i.test(url.pathname))
 }
 
 async function cacheFirst(request) {
@@ -104,7 +125,12 @@ async function broadcast(msg) {
   clients.forEach((c) => c.postMessage(msg))
 }
 
+const precachingLangs = new Set()
+const PRECACHE_CONCURRENCY = 6
+
 async function precacheImagesForLang(lang) {
+  if (precachingLangs.has(lang)) return
+  precachingLangs.add(lang)
   try {
     let data = await fetchLangData(lang)
     if (!data && lang !== 'en') data = await fetchLangData('en')
@@ -126,14 +152,21 @@ async function precacheImagesForLang(lang) {
     await broadcast({ type: 'precache-progress', done, total })
 
     const cache = await caches.open(CACHE_NAME)
-    for (const url of all) {
-      if (!(await cache.match(url))) {
-        await cache.add(url).catch(() => {})
-      }
-      done++
-      if (done % 10 === 0 || done === total) {
-        await broadcast({ type: 'precache-progress', done, total })
+    let index = 0
+    async function worker() {
+      while (index < all.length) {
+        const url = all[index++]
+        if (!(await cache.match(url))) {
+          await cache.add(url).catch(() => {})
+        }
+        done++
+        if (done % 10 === 0 || done === total) {
+          await broadcast({ type: 'precache-progress', done, total })
+        }
       }
     }
-  } catch {}
+    await Promise.all(Array.from({ length: PRECACHE_CONCURRENCY }, worker))
+  } catch {} finally {
+    precachingLangs.delete(lang)
+  }
 }

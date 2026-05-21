@@ -1,7 +1,18 @@
 import './style.css'
-import { initRouter } from './router'
-import { initOffline } from './layout'
+import { initRouter, render } from './router'
+import { initOffline, header, bindHeaderEvents } from './layout'
 
+const headerMount = document.getElementById('header-mount')!
 const app = document.querySelector<HTMLDivElement>('#app')!
-initRouter(app)
+
+function refreshHeader(): void {
+  headerMount.innerHTML = header()
+  bindHeaderEvents(() => {
+    refreshHeader()
+    render(app)
+  })
+}
+
 initOffline()
+refreshHeader()
+initRouter(app)
