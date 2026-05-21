@@ -6,15 +6,17 @@ D-CAS 2.0 is a client-side, framework-free single-page application built with Ty
 
 ```
 src/
-├── main.ts              # Entry point: initializes router & offline support
+├── main.ts              # Entry point: renders header into #header-mount,
+│                        # initializes offline support & router
 ├── router.ts            # Client-side router & route definitions
-├── layout.ts            # Header component & shared layout utilities
+├── layout.ts            # Re-exports header / bindHeaderEvents / initOffline
 ├── style.css            # Tailwind directives
 ├── i18n.ts              # Translation resources (EN/FR/ES) & language detection
 │
-├── views/               # Page-level components (return HTML strings)
+├── views/               # Page-level components (return HTML strings — no header)
 │   ├── home.ts          # Interactive questionnaire
 │   ├── catalog.ts       # Disease list with search & sorting
+│   ├── about.ts         # About page (credits, CIRAD info)
 │   ├── privacy.ts       # Privacy policy
 │   └── legal.ts         # Legal notice & copyright
 │
@@ -23,6 +25,7 @@ src/
 │   ├── questionnaire.ts # Question tree navigation & disease results
 │   ├── disease_result.ts # Disease detail view with carousel
 │   ├── call_to_action.ts # CTA for sugarcane diseases book
+│   ├── cirad_corner.ts  # CIRAD corner logo (home page)
 │   ├── breadcrumb.ts    # Navigation breadcrumb
 │   └── question_button.ts # Styled question button
 │
@@ -32,31 +35,37 @@ src/
 └── vite-env.d.ts        # Vite type definitions
 ```
 
+`index.html` has two mount points: `#header-mount` (header rendered once at boot, re-rendered only on language change) and `#app` (route content, swapped on navigation).
+
 ## Routing
 
-**Client-side router** in `router.ts` with three-language URL aliases:
+**Client-side router** in `router.ts` with three-language URL aliases. Each route may declare an optional `init` callback for post-render wiring:
 
 ```ts
+type Route = {
+  path: string
+  titleKey: string
+  view: () => string
+  init?: () => void
+}
+
 const routes: Route[] = [
-  { path: '/',                titleKey: 'home.title',      view: homeView },
-  { path: '/catalogue',       titleKey: 'catalogue.title', view: catalogueView },
-  { path: '/catalog',         titleKey: 'catalogue.title', view: catalogueView },
-  { path: '/catalogo',        titleKey: 'catalogue.title', view: catalogueView },
-  // ... etc for privacy, legal
+  { path: '/',          titleKey: 'home.title',      view: homeView,      init: initQuestionnaire },
+  { path: '/catalogue', titleKey: 'catalogue.title', view: catalogueView, init: initCatalogue },
+  { path: '/catalog',   titleKey: 'catalogue.title', view: catalogueView, init: initCatalogue },
+  { path: '/catalogo',  titleKey: 'catalogue.title', view: catalogueView, init: initCatalogue },
+  // ... etc for about, privacy, legal
 ]
 ```
 
 **Navigation flow:**
 1. User clicks an internal `<a>` tag.
-2. Router intercepts the click, prevents default, calls `navigateTo()`.
-3. `navigateTo()` pushes state to history and re-renders the app.
-4. `window.popstate` listener handles back/forward buttons.
+2. Router intercepts the click (skipping `target="_blank"`, `download`, modifier keys, `mailto:`, `tel:` and absolute URLs), prevents default, calls `navigateTo()`.
+3. `navigateTo()` pushes state to history and re-renders the main content (`app.innerHTML = route.view()`).
+4. `route.init?.()` runs after the view is in the DOM.
+5. `window.popstate` listener handles back/forward buttons.
 
-No framework: views are plain functions returning HTML strings that are injected via `app.innerHTML = view()`.
-
-**Route initialization:**
-- Home page → calls `initQuestionnaire()` to set up event listeners.
-- Catalog page → calls `initCatalogue()` to load disease data and bind search/sort handlers.
+The header is **not** part of `route.view()` — it lives in its own `#header-mount` and is only re-rendered when the language changes.
 
 ## Internationalization (i18n)
 
@@ -72,7 +81,7 @@ No framework: views are plain functions returning HTML strings that are injected
 **Changing language:**
 - User selects from dropdown in header.
 - `i18next.changeLanguage()` updates the language.
-- Page re-renders with new translations.
+- `main.ts`'s `refreshHeader()` re-renders the header into `#header-mount`, then `router.render()` re-renders the current route's main content.
 - Service Worker is notified to precache the selected language's image assets.
 
 **URL paths are localized:**
@@ -102,19 +111,19 @@ diseases-img/                 (Disease photographs)
 
 ## Offline Support (Service Worker)
 
-**Service Worker** in `public/sw.js` implements a cache-first strategy:
+**Service Worker** in `public/sw.js`:
 
-1. **App shell** (HTML, CSS, JS) — cached at install time.
-2. **Identification keys** — cached at install time (all three languages).
-3. **Disease images** — lazy-loaded and cached on-demand via `precacheImages()`.
-4. **Cache busting** — `CACHE_NAME = 'dcas-v3'` is updated when cache strategy changes. Old caches are deleted on activation.
+1. **App shell** (HTML, identification keys, favicon) — precached at install time.
+2. **Vite bundles** (hashed JS/CSS) — at install time, the SW fetches `/.vite/manifest.json` (generated by `build.manifest: true` in `vite.config.ts`) and precaches every entry's `file`, `css`, and `assets`. This guarantees the app works fully offline on first visit.
+3. **Disease images** — precached on demand when the user picks a language (or after initial SW registration). Workers run in parallel (6 concurrent fetches) with an in-progress guard per language so rapid language toggles don't queue duplicate runs.
+4. **Runtime strategy** — images (`/datas/diseases-img/*` and `/assets/*.{png,jpg,jpeg,webp,svg,gif,ico}`) use cache-first; everything else uses network-first with cache fallback.
+5. **Cache busting** — bump `CACHE_NAME` in `sw.js` when the caching strategy changes. Old caches are deleted on activation.
 
-**Image precaching:**
-- When user selects a language, Service Worker is sent a message.
-- SW fetches and caches images for that language's disease set.
-- Progress is reported back and displayed to the user ("Downloading 45/120").
+**Image precaching progress:**
+- SW broadcasts `{ type: 'precache-progress', done, total }` to all clients every 10 images.
+- Header dropdown shows the progress bar and "Downloading 45/120" / "Ready for offline use ✓".
 
-**User can toggle offline mode** via header switch (`offline-toggle`). This controls whether SW is registered.
+**User can toggle offline mode** via header switch (`offline-toggle`). This registers or unregisters the SW and wipes its caches.
 
 ## Component Patterns
 
@@ -153,17 +162,12 @@ export function initMyComponent(): void {
 
 2. **Add translations** to `src/i18n.ts` (EN, FR, ES).
 
-3. **Register route** in `src/router.ts`:
+3. **Register route** in `src/router.ts` (use the `init?` field to wire post-render listeners):
    ```ts
-   { path: '/mypage', titleKey: 'mypage.title', view: myPageView }
+   { path: '/mypage', titleKey: 'mypage.title', view: myPageView, init: initMyPage }
    ```
 
 4. **Add navigation link** in `src/components/header.ts` (if needed).
-
-5. **Call init function** in `src/router.ts` `render()`:
-   ```ts
-   if (route.path === '/mypage') initMyPage()
-   ```
 
 ## Key Technical Decisions
 
@@ -195,5 +199,5 @@ The app degrades gracefully; it doesn't crash.
 
 ---
 
-**Last updated:** April 2026  
+**Last updated:** May 2026  
 **Maintained by:** [ffillouxdev](https://github.com/ffillouxdev)
