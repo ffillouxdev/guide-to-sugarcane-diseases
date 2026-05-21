@@ -1,15 +1,19 @@
 import { useT } from '../i18n'
 import type { Disease } from '../data/key-loader'
 
+const IMG_EXT_RE = /\.(jpe?g|png|webp|gif)$/i
+const NUM_PREFIX_RE = /^[\d.]+\s+/
+const FIGURE_RE = /Figure\s+\d+\s*/gi
+
 function formatFilename(path: string): string {
-  const base = (path.split('/').pop() ?? path).replace(/\.(jpe?g|png|webp|gif)$/i, '')
+  const base = (path.split('/').pop() ?? path).replace(IMG_EXT_RE, '')
   const sep = base.lastIndexOf('_')
   if (sep === -1) return base
   const disease = base.slice(0, sep)
-    .replace(/^[\d.]+\s+/, '')
-    .replace(/Figure\s+\d+\s*/gi, '')
+    .replace(NUM_PREFIX_RE, '')
+    .replace(FIGURE_RE, '')
     .trim()
-  const photographer = base.slice(sep + 1).trim().replace(/\.(jpe?g|png|gif|webp)$/i, '')
+  const photographer = base.slice(sep + 1).trim().replace(IMG_EXT_RE, '')
   if (!disease) return base
   return `(© ${photographer})`
 }
@@ -29,7 +33,7 @@ function carousel(images: string[], diseaseName: string): string {
   const frame = /*html*/`
     <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
       ${hasImages
-        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="${diseaseName} image" loading="lazy" class="w-full h-full object-cover" />`
+        ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="${diseaseName} image" class="w-full h-full object-cover" />`
         : /*html*/`<span class="text-gray-400 text-sm italic text-center px-6">${t('result.noImage')}</span>`
       }
     </div>

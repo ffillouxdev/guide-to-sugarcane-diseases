@@ -26,6 +26,7 @@ function isActive(path: string): boolean {
 export function header(): string {
   const t = useT()
   const lang = languages.find(l => l.code === i18next.language) ?? languages[0]
+  const offlineChecked = isOfflineEnabled() ? 'checked' : ''
 
   const options = languages.map(({ code, flag, label }) =>
     `<option value="${code}" ${code === lang.code ? 'selected' : ''}>${label} ${flag}</option>`
@@ -75,7 +76,7 @@ export function header(): string {
             </button>
             <div id="menu-dropdown" class="hidden absolute left-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50">
               <label class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
-                <input type="checkbox" id="offline-toggle" checked class="accent-green-700 w-4 h-4"/>
+                <input type="checkbox" id="offline-toggle" ${offlineChecked} class="accent-green-700 w-4 h-4"/>
                 ${t('nav.offline')}
               </label>
               <div class="offline-progress hidden px-4 py-2 border-b border-gray-100">
@@ -118,7 +119,7 @@ export function header(): string {
     <!-- Mobile more dropdown -->
     <div id="mobile-menu-dropdown" class="md:hidden hidden fixed bottom-14 right-4 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50">
       <label class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
-        <input type="checkbox" id="mobile-offline-toggle" checked class="accent-green-700 w-4 h-4"/>
+        <input type="checkbox" id="mobile-offline-toggle" ${offlineChecked} class="accent-green-700 w-4 h-4"/>
         ${t('nav.offline')}
       </label>
       <div class="offline-progress hidden px-4 py-2 border-b border-gray-100">
@@ -167,6 +168,38 @@ export function initOffline(): void {
   if (isOfflineEnabled()) {
     registerSW()
   }
+
+  // Outside-click handler: closes any open dropdown. Registered ONCE for the
+  // lifetime of the page — re-binding on every router render would leak.
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement
+    const menuDropdown = document.getElementById('menu-dropdown')
+    const mobileMenuDropdown = document.getElementById('mobile-menu-dropdown')
+    if (menuDropdown && !menuDropdown.contains(target)) menuDropdown.classList.add('hidden')
+    if (mobileMenuDropdown && !mobileMenuDropdown.contains(target)) mobileMenuDropdown.classList.add('hidden')
+  })
+
+  // SW precache progress messages: registered ONCE on a persistent target
+  // (navigator.serviceWorker). Re-binding on every render would leak handlers.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data?.type !== 'precache-progress') return
+      const { done, total } = event.data
+      const ready = done >= total
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0
+      const text = ready
+        ? i18next.t('nav.offlineReady')
+        : `${i18next.t('nav.offlineDownloading')} ${done}/${total}`
+      document.querySelectorAll<HTMLElement>('.offline-progress').forEach((el) => {
+        el.classList.remove('hidden')
+        const textEl = el.querySelector('.offline-progress-text')
+        const barEl = el.querySelector<HTMLElement>('.offline-progress-bar')
+        if (textEl) textEl.textContent = text
+        if (barEl) barEl.style.width = `${ready ? 100 : pct}%`
+        if (ready) setTimeout(() => el.classList.add('hidden'), 4000)
+      })
+    })
+  }
 }
 
 function bindOfflineToggle(id: string): void {
@@ -209,34 +242,7 @@ export function bindHeaderEvents(onLangChange: () => void): void {
     mobileMenuDropdown?.classList.toggle('hidden')
   })
 
-  // Close dropdowns only on outside click (keeps them open during download / inside interactions)
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement
-    if (!menuDropdown?.contains(target)) menuDropdown?.classList.add('hidden')
-    if (!mobileMenuDropdown?.contains(target)) mobileMenuDropdown?.classList.add('hidden')
-  })
-
   // Offline toggles
   bindOfflineToggle('offline-toggle')
   bindOfflineToggle('mobile-offline-toggle')
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      if (event.data?.type !== 'precache-progress') return
-      const { done, total } = event.data
-      const ready = done >= total
-      const pct = total > 0 ? Math.round((done / total) * 100) : 0
-      const text = ready
-        ? i18next.t('nav.offlineReady')
-        : `${i18next.t('nav.offlineDownloading')} ${done}/${total}`
-      document.querySelectorAll<HTMLElement>('.offline-progress').forEach((el) => {
-        el.classList.remove('hidden')
-        const textEl = el.querySelector('.offline-progress-text')
-        const barEl = el.querySelector<HTMLElement>('.offline-progress-bar')
-        if (textEl) textEl.textContent = text
-        if (barEl) barEl.style.width = `${ready ? 100 : pct}%`
-        if (ready) setTimeout(() => el.classList.add('hidden'), 4000)
-      })
-    })
-  }
 }
