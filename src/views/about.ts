@@ -18,6 +18,12 @@ export function aboutView(): string {
           <p class="text-sm text-gray-700 mb-2">${t('about.creditsDevelopment')}</p>
           <p class="text-sm text-gray-700 mb-4">${t('about.creditsPhotographers')}</p>
 
+          <h2 class="text-base font-semibold text-gray-800 mt-6 mb-2">${t('contact.heading')}</h2>
+          <p class="text-sm text-gray-700 mb-4">
+            ${t('contact.body')}
+            <a href="mailto:sugarcane-diseases@cirad.fr" class="font-semibold text-green-700 hover:underline">sugarcane-diseases@cirad.fr</a>
+          </p>
+
           <div class="flex items-center gap-4 bg-gray-200 rounded border border-gray-300 p-4 mt-4">
             <div class="text-sm text-gray-700 flex-1">
               <p class="mb-1">

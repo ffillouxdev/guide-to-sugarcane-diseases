@@ -63,6 +63,10 @@ const resources = {
         buttonMobile: 'Web book →',
         buttonDesktop: 'The free web book →',
       },
+      contact: {
+        heading: 'Contact us',
+        body: 'For any questions, information or photographs of sugarcane diseases, please contact us at',
+      },
       privacy: {
         title: 'Privacy Policy',
         dataHeading: 'Data collected',
@@ -151,6 +155,10 @@ const resources = {
         buttonMobile: 'Web book →',
         buttonDesktop: 'Consulter l\'ouvrage gratuit →',
       },
+      contact: {
+        heading: 'Contactez-nous',
+        body: 'Pour toute question, information ou photographie de maladies de la canne à sucre, veuillez nous contacter à',
+      },
       privacy: {
         title: 'Politique de confidentialité',
         dataHeading: 'Données collectées',
@@ -238,6 +246,10 @@ const resources = {
         authors: 'editado por Philippe ROTT, Jean-Claude GIRARD y Jean Heinrich DAUGROIS',
         buttonMobile: 'Web book →',
         buttonDesktop: 'Consultar el libro gratuito →',
+      },
+      contact: {
+        heading: 'Contáctenos',
+        body: 'Para cualquier pregunta, información o fotografía de enfermedades de la caña de azúcar, contáctenos en',
       },
       privacy: {
         title: 'Política de privacidad',

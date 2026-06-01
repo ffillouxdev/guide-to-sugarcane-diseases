@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dcas-v4'
+const CACHE_NAME = 'dcas-v5'
 
 const APP_SHELL = [
   '/',
