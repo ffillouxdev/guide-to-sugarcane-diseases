@@ -110,10 +110,10 @@ export function renderPathogen(text: string): string {
 // Strips cross-reference parentheticals (e.g. "(see also X; Y)") that bloat
 // names like "Basal stem, root and sheath rot(see also ...; ...; ...)", then
 // caps to 40 chars with an ellipsis as a safety net.
-const PARENTHETICAL_RE = /\s*\([^)]*\)/g
+const PARENTHETICAL_RE = /\([^)]*\)/g
 const RESULT_LABEL_MAX = 40
 export function formatResultLabel(name: string): string {
-  let compact = name.replace(PARENTHETICAL_RE, '').trim()
+  let compact = name.replace(PARENTHETICAL_RE, '').replace(/\s+/g, ' ').trim()
   if (compact.length > RESULT_LABEL_MAX) {
     compact = compact.slice(0, RESULT_LABEL_MAX).trimEnd() + '…'
   }
