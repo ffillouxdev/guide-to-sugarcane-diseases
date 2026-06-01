@@ -117,7 +117,7 @@ export function formatResultLabel(name: string): string {
   if (compact.length > RESULT_LABEL_MAX) {
     compact = compact.slice(0, RESULT_LABEL_MAX).trimEnd() + '…'
   }
-  return `result_${compact.replace(/\s+/g, '_')}`
+  return `Result_${compact}`
 }
 
 export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {}): string {
