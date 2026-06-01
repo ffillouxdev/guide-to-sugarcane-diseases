@@ -11,6 +11,8 @@ D-CAS 2.0 (*Détermination et Catalogue des Affections de la canne à Sucre*) is
 - **Fully offline** — Once loaded, the app works without connectivity thanks to a Service Worker that caches the identification key and disease images.
 - **Trilingual** — Interface and content available in English, French and Spanish, with per-language disease trees.
 - **Mobile-friendly** — Responsive layout optimized for both portrait and landscape phone usage in the field.
+- **About / Legal / Privacy pages** — Informational pages accessible from the navigation menu.
+- **PWA installable** — Can be installed on mobile and desktop devices.
 
 ## Tech Stack
 
@@ -84,9 +86,32 @@ The `public/datas/` folder is **gitignored** and must be provided separately by 
 - `identification-key.json` — English disease tree (primary source)
 - `cle-identification.json` — French disease tree
 - `clave-de-identificacion.json` — Spanish disease tree
-- `diseases-img/` — Disease photographs (confidential, CIRAD property)
+- `diseases-img-webp/` — Disease photographs in WebP format (confidential, CIRAD property, ~350 Mo)
 
 The loader (`src/data/key-loader.ts`) falls back to the English key when a translated key is empty.
+
+## CI/CD
+
+| Check | Tool |
+|---|---|
+| Type-check & build | GitHub Actions |
+| npm audit (critical) | GitHub Actions |
+| Code quality | [SonarCloud](https://sonarcloud.io/project/overview?id=ffillouxdev_D-CAS-2.0) |
+
+## Deployment
+
+Production server: **Red Hat Enterprise Linux 9**, served by **Nginx**.
+
+```bash
+# Build
+npm run build
+
+# Deploy dist/ to server
+rsync -avz dist/ root@croult.cirad.fr:/usr/share/nginx/website_canedr/
+
+# Deploy data (keys + images) — first time or when updated
+rsync -avz /tmp/datas-deploy/ root@croult.cirad.fr:/usr/share/nginx/website_canedr/datas/
+```
 
 ## Credits
 
