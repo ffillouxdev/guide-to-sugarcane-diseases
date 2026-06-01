@@ -9,10 +9,10 @@
 //   - hashed JS/CSS bundles in index.html are present in the vite manifest
 //     (so the SW precache list and the actual page payload agree)
 
-import { readFileSync, existsSync } from 'fs'
-import { Script } from 'vm'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { readFileSync, existsSync } from 'node:fs'
+import { Script } from 'node:vm'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST = join(__dirname, '../dist')
@@ -21,7 +21,8 @@ let failures = 0
 
 function check(label, ok, detail = '') {
   const mark = ok ? '✓' : '✗'
-  console.log(`${mark} ${label}${ok ? '' : `\n    ${detail}`}`)
+  const suffix = ok ? '' : `\n    ${detail}`
+  console.log(`${mark} ${label}${suffix}`)
   if (!ok) failures++
 }
 

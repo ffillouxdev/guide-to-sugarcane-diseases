@@ -79,8 +79,9 @@ export async function initCatalogue(): Promise<void> {
   function updateSortIndicators(): void {
     const nameEl = document.getElementById('sort-name')
     const pathEl = document.getElementById('sort-pathogen')
-    if (nameEl) nameEl.textContent = sortKey === 'name' ? (sortDir === 'asc' ? '↑' : '↓') : '↕'
-    if (pathEl) pathEl.textContent = sortKey === 'pathogen' ? (sortDir === 'asc' ? '↑' : '↓') : '↕'
+    const dirArrow = sortDir === 'asc' ? '↑' : '↓'
+    if (nameEl) nameEl.textContent = sortKey === 'name' ? dirArrow : '↕'
+    if (pathEl) pathEl.textContent = sortKey === 'pathogen' ? dirArrow : '↕'
   }
 
   function renderEntryRow(d: Entry): string {
@@ -146,11 +147,11 @@ export async function initCatalogue(): Promise<void> {
     if (thPathogen) {
       if (onlyOtherCauses) {
         thPathogen.innerHTML = '<span class="text-gray-400 text-base">×</span>'
-        thPathogen.removeAttribute('data-sort')
+        delete thPathogen.dataset.sort
         thPathogen.classList.remove('cursor-pointer', 'hover:bg-gray-50')
       } else {
         thPathogen.innerHTML = `${t('catalogue.pathogenColumnShort')} <span class="hidden md:inline">${t('catalogue.pathogenSynonym')}</span> <span id="sort-pathogen" class="text-gray-400">↕</span>`
-        thPathogen.setAttribute('data-sort', 'pathogen')
+        thPathogen.dataset.sort = 'pathogen'
         thPathogen.classList.add('cursor-pointer', 'hover:bg-gray-50')
       }
       thPathogen.style.display = ''
