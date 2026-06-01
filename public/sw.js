@@ -34,23 +34,23 @@ async function getViteBundleAssets() {
   }
 }
 
-self.addEventListener('install', (event) => {
+globalThis.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME)
     const bundles = await getViteBundleAssets()
     const all = [...new Set([...APP_SHELL, ...bundles])]
     await Promise.all(all.map((url) => cache.add(url).catch(() => {})))
   })())
-  self.skipWaiting()
+  globalThis.skipWaiting()
 })
 
-self.addEventListener('activate', (event) => {
+globalThis.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
     )
   )
-  self.clients.claim()
+  globalThis.clients.claim()
 })
 
 function isImageRequest(request) {
@@ -69,7 +69,7 @@ async function cacheFirst(request) {
       cache.put(request, response.clone())
     }
     return response
-  } catch (err) {
+  } catch {
     return new Response('Not found', { status: 404 })
   }
 }
@@ -82,7 +82,7 @@ async function networkFirst(request) {
       cache.put(request, response.clone())
     }
     return response
-  } catch (err) {
+  } catch {
     const cached = await caches.match(request)
     if (cached) return cached
     if (request.mode === 'navigate') {
@@ -93,15 +93,16 @@ async function networkFirst(request) {
   }
 }
 
-self.addEventListener('fetch', (event) => {
+globalThis.addEventListener('fetch', (event) => {
   const { request } = event
   if (request.method !== 'GET') return
-  if (!request.url.startsWith(self.location.origin)) return
+  if (!request.url.startsWith(globalThis.location.origin)) return
 
   event.respondWith(isImageRequest(request) ? cacheFirst(request) : networkFirst(request))
 })
 
-self.addEventListener('message', (event) => {
+globalThis.addEventListener('message', (event) => {
+  if (!event.source) return
   if (event.data?.type === 'precache-images') {
     event.waitUntil(precacheImagesForLang(event.data.lang || 'en'))
   }
@@ -121,7 +122,7 @@ async function fetchLangData(lang) {
 }
 
 async function broadcast(msg) {
-  const clients = await self.clients.matchAll({ includeUncontrolled: true })
+  const clients = await globalThis.clients.matchAll({ includeUncontrolled: true })
   clients.forEach((c) => c.postMessage(msg))
 }
 

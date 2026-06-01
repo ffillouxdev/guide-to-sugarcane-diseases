@@ -46,7 +46,7 @@ function resolve(pathname: string): Route {
 }
 
 export function render(app: HTMLElement): void {
-  const route = resolve(window.location.pathname)
+  const route = resolve(globalThis.location.pathname)
   const t = i18next.t.bind(i18next)
 
   document.title = `${t(route.titleKey)} — CaneDr`
@@ -67,7 +67,7 @@ export function navigateTo(path: string, app: HTMLElement): void {
 const EXTERNAL_HREF_RE = /^(https?:|\/\/|#|mailto:|tel:)/
 
 export function initRouter(app: HTMLElement): void {
-  window.addEventListener('popstate', () => render(app))
+  globalThis.addEventListener('popstate', () => render(app))
 
   document.addEventListener('click', (e) => {
     if (e.defaultPrevented) return

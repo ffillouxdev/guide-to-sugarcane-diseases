@@ -18,9 +18,9 @@ function lp(key: string): string {
 }
 
 function isActive(path: string): boolean {
-  const pathname = window.location.pathname
+  const pathname = globalThis.location.pathname
   if (path === '/') return pathname === '/'
-  return Object.values(localizedPaths[path] || {}).some(p => pathname === p)
+  return Object.values(localizedPaths[path] || {}).includes(pathname)
 }
 
 export function header(): string {
