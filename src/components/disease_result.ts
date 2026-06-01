@@ -1,4 +1,4 @@
-import { useT } from '../i18n'
+import i18next, { useT } from '../i18n'
 import type { Disease } from '../data/key-loader'
 
 const IMG_EXT_RE = /\.(jpe?g|png|webp|gif)$/i
@@ -117,7 +117,7 @@ export function formatResultLabel(name: string): string {
   if (compact.length > RESULT_LABEL_MAX) {
     compact = compact.slice(0, RESULT_LABEL_MAX).trimEnd() + '…'
   }
-  return `Result_${compact}`
+  return `${i18next.t('result.prefix')}_${compact}`
 }
 
 export function diseaseResult(disease: Disease, opts: DiseaseResultOptions = {}): string {
