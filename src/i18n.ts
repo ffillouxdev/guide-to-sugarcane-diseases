@@ -55,6 +55,7 @@ const resources = {
         geoLocations: 'Geographical locations',
         geoWarning: 'If you observe these symptoms in a location not mentioned below, please contact us!',
         geoWarningEmail: 'sugarcane-diseases@cirad.fr',
+        prefix: 'Result',
       },
       cta: {
         intro: 'For additionnal information, please see the book',
@@ -147,6 +148,7 @@ const resources = {
         geoLocations: 'Localisations géographiques',
         geoWarning: "Si vous observez ces symptômes dans un lieu non mentionné ci-dessous, contactez-nous !",
         geoWarningEmail: 'sugarcane-diseases@cirad.fr',
+        prefix: 'Résultat',
       },
       cta: {
         intro: 'Pour plus d\'informations, consultez l\'ouvrage',
@@ -239,6 +241,7 @@ const resources = {
         geoLocations: 'Ubicaciones geográficas',
         geoWarning: 'Si observa estos síntomas en una ubicación no mencionada a continuación, ¡contáctenos!',
         geoWarningEmail: 'sugarcane-diseases@cirad.fr',
+        prefix: 'Resultado',
       },
       cta: {
         intro: 'Para más información, consulte el libro',
