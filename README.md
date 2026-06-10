@@ -113,6 +113,13 @@ rsync -avz dist/ root@croult.cirad.fr:/usr/share/nginx/website_canedr/
 rsync -avz /tmp/datas-deploy/ root@croult.cirad.fr:/usr/share/nginx/website_canedr/datas/
 ```
 
+### Security headers (Nginx)
+
+HTTP security headers (CSP, HSTS, nosniff, etc.) are defined in
+[`deploy/nginx-security-headers.conf`](deploy/nginx-security-headers.conf).
+Copy it to `/etc/nginx/snippets/` on the server and `include` it in the
+server block (see instructions in the file), then `nginx -t && systemctl reload nginx`.
+
 ## Credits
 
 Based on the book *A Guide to Sugarcane Diseases*, edited by Philippe Rott, Jean-Claude Girard and Jean Heinrich Daugrois, published by [Éditions Quæ](https://www.quae.com/produit/78/9782876143869/a-guide-to-sugarcane-diseases).
