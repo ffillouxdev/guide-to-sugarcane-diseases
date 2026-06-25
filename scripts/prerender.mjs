@@ -62,6 +62,7 @@ const vite = await createServer({ appType: 'custom', server: { middlewareMode: t
 try {
   const routes = await vite.ssrLoadModule('/src/routes.ts')
   const i18next = (await vite.ssrLoadModule('/src/i18n.ts')).default
+  const { header } = await vite.ssrLoadModule('/src/layout.ts')
   const views = {
     home: (await vite.ssrLoadModule('/src/views/home.ts')).homeView,
     catalogue: (await vite.ssrLoadModule('/src/views/catalog.ts')).catalogueView,
@@ -128,6 +129,29 @@ try {
     `\n</urlset>\n`
   await writeFile(join(DIST, 'sitemap.xml'), sitemap, 'utf8')
   console.log(`✓ wrote sitemap.xml (${entries.length} urls)`)
+
+  // --- 404 page (nginx serves it with a real 404 status; see deploy/canedr.conf) ---
+  globalThis.location.pathname = '/'
+  await i18next.changeLanguage('en')
+  const t404 = i18next.t.bind(i18next)
+  const body404 = `${header()}
+    <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 min-h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-no-repeat mt-2">
+      <h1 class="text-3xl text-center font-bold text-gray-900">${t404('notFound')}</h1>
+      <button onclick="history.back()" class="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition-colors block mx-auto">${t404('backHome')}</button>
+    </main>`
+  let html404 = buildHtml(template, {
+    lang: 'en',
+    title: `${t404('notFound')} — CaneDr`,
+    desc: t404('seo.descHome'),
+    canonical: SITE_ORIGIN + '/',
+    ogLocale: OG_LOCALES.en,
+    alternates: [],
+    appHtml: body404,
+  })
+  // A not-found page must not be indexed.
+  html404 = html404.replace(/<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, follow" />')
+  await writeFile(join(DIST, '404.html'), html404, 'utf8')
+  console.log('✓ wrote 404.html')
 } finally {
   await vite.close()
 }
