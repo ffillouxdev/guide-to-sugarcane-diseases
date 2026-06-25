@@ -8,6 +8,9 @@ dist
 # Confidential assets
 public/datas/
 
+# SonarQube scanner output
+.scannerwork/
+
 # IDE
 .vscode
 .idea
