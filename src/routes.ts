@@ -46,7 +46,9 @@ export function langFromPath(pathname: string): Lang {
 /** Absolute (origin-less) URL of a page in a given language. */
 export function urlFor(page: PageMeta, lang: Lang): string {
   if (page.key === 'home') return lang === 'en' ? '/' : `/${lang}/`
-  return (lang === 'en' ? '' : `/${lang}`) + page.slug[lang]
+  // Trailing slash so the canonical URL matches what nginx serves for a
+  // prerendered directory (/fr/catalogue/index.html) — no 301 redirect.
+  return (lang === 'en' ? '' : `/${lang}`) + page.slug[lang] + '/'
 }
 
 export interface Resolved {
