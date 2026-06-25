@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dcas-v8'
+const CACHE_NAME = 'dcas-v9'
 
 const APP_SHELL = [
   '/',
@@ -58,7 +58,7 @@ globalThis.addEventListener('activate', (event) => {
 
 function isImageRequest(request) {
   const url = new URL(request.url)
-  return url.pathname.startsWith('/datas/diseases-img/') ||
+  return url.pathname.startsWith('/datas/diseases-img') ||
          (url.pathname.startsWith('/assets/') && /\.(png|jpg|jpeg|webp|svg|gif|ico)$/i.test(url.pathname))
 }
 
