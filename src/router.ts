@@ -6,17 +6,24 @@ import { aboutView } from './views/about'
 import { privacyView } from './views/privacy'
 import { legalView } from './views/legal'
 import { initQuestionnaire } from './components/questionnaire'
+import {
+  type Lang,
+  type PageKey,
+  type PageMeta,
+  LANGS,
+  SITE_ORIGIN,
+  OG_LOCALES,
+  resolvePath,
+  urlFor,
+} from './routes'
 
-type Route = {
-  path: string
-  titleKey: string
-  descKey?: string
-  view: () => string
-  init?: () => void
+const VIEWS: Record<PageKey, { view: () => string; init?: () => void }> = {
+  home:      { view: homeView, init: initQuestionnaire },
+  catalogue: { view: catalogueView, init: initCatalogue },
+  about:     { view: aboutView },
+  privacy:   { view: privacyView },
+  legal:     { view: legalView },
 }
-
-const SITE_ORIGIN = 'https://canedr.cirad.fr'
-const OG_LOCALES: Record<string, string> = { en: 'en_US', fr: 'fr_FR', es: 'es_ES' }
 
 const notFoundView = () => {
   const t = i18next.t.bind(i18next)
@@ -29,76 +36,68 @@ const notFoundView = () => {
   `
 }
 
-const routes: Route[] = [
-  { path: '/',                 titleKey: 'seo.titleHome',   descKey: 'seo.descHome',      view: homeView,      init: initQuestionnaire },
-  { path: '/catalogue',        titleKey: 'catalogue.title', descKey: 'seo.descCatalogue', view: catalogueView, init: initCatalogue },
-  { path: '/catalog',          titleKey: 'catalogue.title', descKey: 'seo.descCatalogue', view: catalogueView, init: initCatalogue },
-  { path: '/catalogo',         titleKey: 'catalogue.title', descKey: 'seo.descCatalogue', view: catalogueView, init: initCatalogue },
-  { path: '/about',            titleKey: 'about.title',     descKey: 'seo.descAbout',     view: aboutView },
-  { path: '/a-propos',         titleKey: 'about.title',     descKey: 'seo.descAbout',     view: aboutView },
-  { path: '/acerca-de',        titleKey: 'about.title',     descKey: 'seo.descAbout',     view: aboutView },
-  { path: '/privacy',          titleKey: 'privacy.title',   descKey: 'seo.descPrivacy',   view: privacyView },
-  { path: '/confidentialite',  titleKey: 'privacy.title',   descKey: 'seo.descPrivacy',   view: privacyView },
-  { path: '/privacidad',       titleKey: 'privacy.title',   descKey: 'seo.descPrivacy',   view: privacyView },
-  { path: '/legal',            titleKey: 'legal.title',     descKey: 'seo.descLegal',     view: legalView },
-  { path: '/mentions-legales', titleKey: 'legal.title',     descKey: 'seo.descLegal',     view: legalView },
-  { path: '/aviso-legal',      titleKey: 'legal.title',     descKey: 'seo.descLegal',     view: legalView },
-]
-
-function resolve(pathname: string): Route {
-  return routes.find(r => r.path === pathname) ?? { path: pathname, titleKey: 'notFound', view: notFoundView }
+function setMeta(selector: string, attr: string, content: string): void {
+  let el = document.head.querySelector(selector)
+  if (!el) {
+    el = document.createElement('meta')
+    const [name, value] = attr.split('=')
+    el.setAttribute(name, value)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
 }
 
-function updateMetaTags(route: Route, title: string): void {
+function setLink(rel: string, href: string, hreflang?: string): void {
+  const selector = hreflang
+    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+    : `link[rel="${rel}"]`
+  let el = document.head.querySelector(selector)
+  if (!el) {
+    el = document.createElement('link')
+    el.setAttribute('rel', rel)
+    if (hreflang) el.setAttribute('hreflang', hreflang)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('href', href)
+}
+
+function updateMetaTags(page: PageMeta | null, lang: Lang, title: string): void {
   const t = i18next.t.bind(i18next)
-  const lang = i18next.language?.split('-')[0] ?? 'en'
   const url = SITE_ORIGIN + globalThis.location.pathname
-  const desc = route.descKey ? t(route.descKey) : t('seo.descHome')
-
-  const setMeta = (selector: string, attr: string, content: string) => {
-    let el = document.head.querySelector(selector)
-    if (!el) {
-      el = document.createElement('meta')
-      const [name, value] = attr.split('=')
-      el.setAttribute(name, value)
-      document.head.appendChild(el)
-    }
-    el.setAttribute('content', content)
-  }
-
-  const setLink = (rel: string, href: string) => {
-    let el = document.head.querySelector(`link[rel="${rel}"]`)
-    if (!el) {
-      el = document.createElement('link')
-      el.setAttribute('rel', rel)
-      document.head.appendChild(el)
-    }
-    el.setAttribute('href', href)
-  }
+  const desc = page ? t(page.descKey) : t('seo.descHome')
 
   setMeta('meta[name="description"]', 'name=description', desc)
   setLink('canonical', url)
   setMeta('meta[property="og:title"]', 'property=og:title', title)
   setMeta('meta[property="og:description"]', 'property=og:description', desc)
   setMeta('meta[property="og:url"]', 'property=og:url', url)
-  setMeta('meta[property="og:locale"]', 'property=og:locale', OG_LOCALES[lang] ?? 'en_US')
+  setMeta('meta[property="og:locale"]', 'property=og:locale', OG_LOCALES[lang])
   setMeta('meta[name="twitter:title"]', 'name=twitter:title', title)
   setMeta('meta[name="twitter:description"]', 'name=twitter:description', desc)
+
+  // Per-page hreflang alternates (only meaningful for a real page).
+  if (page) {
+    for (const l of LANGS) setLink('alternate', SITE_ORIGIN + urlFor(page, l), l)
+    setLink('alternate', SITE_ORIGIN + urlFor(page, 'en'), 'x-default')
+  }
 }
 
 export function render(app: HTMLElement): void {
-  const route = resolve(globalThis.location.pathname)
-  const title = `${i18next.t.bind(i18next)(route.titleKey)} — CaneDr`
+  const { lang, page } = resolvePath(globalThis.location.pathname)
+  if (i18next.language !== lang) i18next.changeLanguage(lang)
+  document.documentElement.lang = lang
+
+  const t = i18next.t.bind(i18next)
+  const title = page ? `${t(page.titleKey)} — CaneDr` : `${t('notFound')} — CaneDr`
 
   document.title = title
-  document.documentElement.lang = i18next.language?.split('-')[0] ?? 'en'
-  updateMetaTags(route, title)
+  updateMetaTags(page, lang, title)
 
-  app.innerHTML = route.view()
+  app.innerHTML = page ? VIEWS[page.key].view() : notFoundView()
 
-  bindHeaderEvents(() => render(app))
+  bindHeaderEvents((path) => navigateTo(path, app))
 
-  route.init?.()
+  if (page) VIEWS[page.key].init?.()
 }
 
 export function navigateTo(path: string, app: HTMLElement): void {

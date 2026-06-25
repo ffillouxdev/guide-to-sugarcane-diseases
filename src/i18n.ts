@@ -1,5 +1,5 @@
 import i18next from 'i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
+import { langFromPath } from './routes'
 
 const resources = {
   en: {
@@ -331,19 +331,19 @@ const resources = {
   },
 }
 
-i18next
-  .use(LanguageDetector)
-  .init({
-    resources,
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'fr', 'es'],
-    detection: {
-      order: ['localStorage'],
-      caches: ['localStorage'],
-      lookupLocalStorage: 'dcas-lang',
-    },
-    interpolation: { escapeValue: false },
-  })
+// Language comes from the URL prefix (/fr/, /es/, else English). On the server
+// (prerendering) there is no location, so default to English — the prerenderer
+// switches the language explicitly per page.
+const initialLng =
+  typeof location !== 'undefined' ? langFromPath(location.pathname) : 'en'
+
+i18next.init({
+  resources,
+  lng: initialLng,
+  fallbackLng: 'en',
+  supportedLngs: ['en', 'fr', 'es'],
+  interpolation: { escapeValue: false },
+})
 
 export default i18next
 

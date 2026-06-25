@@ -1,4 +1,5 @@
 import i18next, { useT } from '../i18n'
+import { type Lang, type PageKey, pageByKey, resolvePath, urlFor } from '../routes'
 
 const languages = [
   { code: 'en', flag: '🇬🇧', label: 'english' },
@@ -6,21 +7,13 @@ const languages = [
   { code: 'es', flag: '🇪🇸', label: 'español' },
 ]
 
-const localizedPaths: Record<string, Record<string, string>> = {
-  catalogue: { en: '/catalog',  fr: '/catalogue', es: '/catalogo' },
-  about:     { en: '/about',    fr: '/a-propos',  es: '/acerca-de' },
-  privacy:   { en: '/privacy',  fr: '/confidentialite', es: '/privacidad' },
-  legal:     { en: '/legal',    fr: '/mentions-legales', es: '/aviso-legal' },
+// Localized URL of a page in the current language (e.g. /fr/catalogue).
+function lp(key: PageKey): string {
+  return urlFor(pageByKey(key), i18next.language as Lang)
 }
 
-function lp(key: string): string {
-  return localizedPaths[key]?.[i18next.language] ?? localizedPaths[key]?.en ?? '/'
-}
-
-function isActive(path: string): boolean {
-  const pathname = globalThis.location.pathname
-  if (path === '/') return pathname === '/'
-  return Object.values(localizedPaths[path] || {}).includes(pathname)
+function isActive(key: PageKey): boolean {
+  return resolvePath(globalThis.location.pathname).page?.key === key
 }
 
 export function header(): string {
@@ -32,14 +25,14 @@ export function header(): string {
     `<option value="${code}" ${code === lang.code ? 'selected' : ''}>${label} ${flag}</option>`
   ).join('')
 
-  const linkClass = (key: string) => {
+  const linkClass = (key: PageKey) => {
     const active = isActive(key)
     return active
       ? 'text-green-700 font-bold'
       : 'text-gray-700 hover:text-green-700'
   }
 
-  const mobileNavClass = (key: string) => {
+  const mobileNavClass = (key: PageKey) => {
     const active = isActive(key)
     return active
       ? 'flex flex-col items-center gap-0.5 text-green-700'
@@ -52,14 +45,14 @@ export function header(): string {
       <div class="max-w-5xl mx-auto flex items-center justify-between px-6 h-14">
 
         <!-- Logo -->
-        <a href="/" class="flex flex-col gap-1 mr-8 shrink-0">
+        <a href="${lp('home')}" class="flex flex-col gap-1 mr-8 shrink-0">
           <span class="font-bold text-lg text-gray-900 leading-none" style="font-family:'Frutiger LT Pro',sans-serif">CaneDr</span>
           <span class="text-xs text-gray-500 leading-none">DCAS v2.0.0</span>
         </a>
 
         <!-- Desktop nav links (hidden on mobile) -->
         <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a href="/" class="flex items-center gap-1.5 ${linkClass('/')}">
+          <a href="${lp('home')}" class="flex items-center gap-1.5 ${linkClass('home')}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>
             ${t('nav.home')}
           </a>
@@ -106,7 +99,7 @@ export function header(): string {
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         <span class="text-[10px]">${t('nav.catalogue')}</span>
       </a>
-      <a href="/" class="${mobileNavClass('/')}">
+      <a href="${lp('home')}" class="${mobileNavClass('home')}">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>
         <span class="text-[10px]">${t('nav.home')}</span>
       </a>
@@ -217,13 +210,15 @@ function bindOfflineToggle(id: string): void {
   })
 }
 
-export function bindHeaderEvents(onLangChange: () => void): void {
+export function bindHeaderEvents(navigate: (path: string) => void): void {
   const select = document.getElementById('lang-select') as HTMLSelectElement | null
   select?.addEventListener('change', () => {
-    i18next.changeLanguage(select.value).then(() => {
-      onLangChange()
-      requestImagePrecache()
-    })
+    const lang = select.value as Lang
+    // Navigate to the same page in the chosen language; the router picks up the
+    // language from the new URL and re-renders.
+    const current = resolvePath(globalThis.location.pathname).page ?? pageByKey('home')
+    navigate(urlFor(current, lang))
+    requestImagePrecache()
   })
 
   // Desktop dropdown
