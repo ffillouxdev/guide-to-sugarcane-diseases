@@ -34,7 +34,12 @@ function carousel(images: string[], diseaseName: string): string {
     <div class="aspect-[4/3] bg-gray-100 border rounded overflow-hidden flex items-center justify-center">
       ${hasImages
         ? /*html*/`<img data-carousel-img src="${firstSrc}" alt="${diseaseName} image" class="w-full h-full object-cover" />`
-        : /*html*/`<span class="text-gray-400 text-sm italic text-center px-6">${t('result.noImage')}</span>`
+        : /*html*/`
+          <div class="flex flex-col items-center justify-center gap-3 p-6">
+            <img src="/assets/icon-512.png" alt="CaneDr" class="w-32 h-32 sm:w-56 sm:h-56 rounded-full" />
+            <span class="text-gray-400 text-sm italic text-center">${t('result.noImage')}</span>
+          </div>
+        `
       }
     </div>
   `

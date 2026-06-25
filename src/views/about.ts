@@ -8,6 +8,7 @@ export function aboutView(): string {
     ${header()}
     <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 min-h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-no-repeat bg-fixed mt-2">
       <article class="bg-white rounded shadow-md border border-gray-200 p-6 md:p-8">
+        <h1 class="text-2xl font-bold text-gray-900 text-center mb-8">${t('about.title')}</h1>
         <section class="mb-8">
           <h2 class="text-base font-semibold text-gray-800 mb-2">${t('about.introHeading')}</h2>
           <p class="text-sm text-gray-700">${t('about.introBody')}</p>
@@ -21,7 +22,7 @@ export function aboutView(): string {
           <h2 class="text-base font-semibold text-gray-800 mt-6 mb-2">${t('contact.heading')}</h2>
           <p class="text-sm text-gray-700 mb-4">
             ${t('contact.body')}
-            <a href="mailto:sugarcane-diseases@cirad.fr" class="font-semibold text-green-700 hover:underline">sugarcane-diseases@cirad.fr</a>
+            <a href="mailto:canedr@cirad.fr" class="font-semibold text-green-700 hover:underline">canedr@cirad.fr</a>
           </p>
 
           <div class="flex items-center gap-4 bg-gray-200 rounded border border-gray-300 p-4 mt-4">
@@ -34,7 +35,7 @@ export function aboutView(): string {
               <a href="https://www.cirad.fr/" target="_blank" rel="noopener noreferrer" class="text-xs text-green-700 hover:underline">${t('about.creditsCiradLink')} →</a>
             </div>
             <a href="https://www.cirad.fr/" target="_blank" rel="noopener noreferrer" class="shrink-0">
-              <img src="/assets/logo-cirad.svg" alt="CIRAD" class="h-16 w-auto" />
+              <img src="/assets/logo-cirad.svg" alt="CIRAD" class="h-10 sm:h-16 w-auto" />
             </a>
           </div>
         </section>

@@ -1,0 +1,10 @@
+# https://canedr.cirad.fr — robots policy
+# Allow search engines to index the whole site...
+User-agent: *
+Allow: /
+
+# ...except the confidential data folder (identification keys + disease images,
+# property of CIRAD).
+Disallow: /datas/
+
+Sitemap: https://canedr.cirad.fr/sitemap.xml

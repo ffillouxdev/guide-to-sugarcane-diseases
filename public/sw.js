@@ -1,9 +1,12 @@
-const CACHE_NAME = 'dcas-v5'
+const CACHE_NAME = 'dcas-v8'
 
 const APP_SHELL = [
   '/',
   '/index.html',
+  '/manifest.webmanifest',
   '/assets/favicon.ico',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
   '/datas/identification-key.json',
   '/datas/cle-identification.json',
   '/datas/clave-de-identificacion.json',

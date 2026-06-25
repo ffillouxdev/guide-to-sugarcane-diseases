@@ -7,7 +7,10 @@ export function privacyView(): string {
   const sections: Array<{ heading: string; body: string }> = [
     { heading: t('privacy.dataHeading'),       body: t('privacy.dataBody') },
     { heading: t('privacy.offlineHeading'),    body: t('privacy.offlineBody') },
+    { heading: t('privacy.logsHeading'),       body: t('privacy.logsBody') },
     { heading: t('privacy.controllerHeading'), body: t('privacy.controllerBody') },
+    { heading: t('privacy.dpoHeading'),        body: t('privacy.dpoBody') },
+    { heading: t('privacy.rightsHeading'),     body: t('privacy.rightsBody') },
   ]
 
   const sectionsHtml = sections.map(({ heading, body }) => /*html*/`

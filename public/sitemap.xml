@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Home -->
+  <url>
+    <loc>https://canedr.cirad.fr/</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canedr.cirad.fr/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canedr.cirad.fr/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://canedr.cirad.fr/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canedr.cirad.fr/" />
+  </url>
+
+  <!-- Catalog -->
+  <url>
+    <loc>https://canedr.cirad.fr/catalog</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canedr.cirad.fr/catalog" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canedr.cirad.fr/catalogue" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://canedr.cirad.fr/catalogo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canedr.cirad.fr/catalog" />
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://canedr.cirad.fr/about</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canedr.cirad.fr/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canedr.cirad.fr/a-propos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://canedr.cirad.fr/acerca-de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canedr.cirad.fr/about" />
+  </url>
+
+  <!-- Privacy -->
+  <url>
+    <loc>https://canedr.cirad.fr/privacy</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canedr.cirad.fr/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canedr.cirad.fr/confidentialite" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://canedr.cirad.fr/privacidad" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canedr.cirad.fr/privacy" />
+  </url>
+
+  <!-- Legal notice -->
+  <url>
+    <loc>https://canedr.cirad.fr/legal</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canedr.cirad.fr/legal" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canedr.cirad.fr/mentions-legales" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://canedr.cirad.fr/aviso-legal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canedr.cirad.fr/legal" />
+  </url>
+
+</urlset>

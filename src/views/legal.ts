@@ -6,6 +6,7 @@ export function legalView(): string {
 
   const sections: Array<{ heading: string; body: string }> = [
     { heading: t('legal.publisherHeading'), body: t('legal.publisherBody') },
+    { heading: t('legal.directorHeading'),  body: t('legal.directorBody') },
     { heading: t('legal.hostingHeading'),   body: t('legal.hostingBody') },
     { heading: t('legal.creditsHeading'),   body: t('legal.creditsBody') },
     { heading: t('legal.copyrightHeading'), body: t('legal.copyrightBody') },
