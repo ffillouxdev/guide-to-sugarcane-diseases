@@ -15,6 +15,7 @@ import {
   SITE_ORIGIN,
   OG_LOCALES,
   langFromPath,
+  pageByKey,
   resolvePath,
   urlFor,
 } from './routes'
@@ -29,12 +30,13 @@ const VIEWS: Record<PageKey, { view: () => string; init?: () => void }> = {
 
 const notFoundView = () => {
   const t = i18next.t.bind(i18next)
+  const homeUrl = urlFor(pageByKey('home'), i18next.language as Lang)
   return /*html*/`
     ${header()}
     <main class="w-full md:max-w-5xl md:mx-auto px-4 md:px-28 py-10 min-h-[calc(100vh-4.5rem)] bg-[url('/assets/main-bg.png')] bg-cover bg-center bg-no-repeat mt-2">
       <img src="/assets/icon-512.png" alt="CaneDr" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto mb-6" />
       <h1 class="text-3xl text-center font-bold text-gray-900">${t('notFound')}</h1>
-      <button onclick="history.back()" class="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition-colors block mx-auto">${t('backHome')}</button>
+      <a href="${homeUrl}" class="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition-colors block mx-auto w-fit">${t('backHome')}</a>
     </main>
   `
 }
