@@ -107,6 +107,12 @@ const resources = {
       questionnaire: {
         prevQuestion: '← Previous question',
       },
+      welcome: {
+        title: 'Welcome to CaneDr',
+        body: 'A free interactive guide by CIRAD to identify sugarcane diseases and disorders: guided diagnosis and a searchable catalog of 80+ diseases illustrated with 500 photographs.',
+        enter: 'Enter',
+        close: 'Close',
+      },
       notFound: 'Page not found',
       backHome: 'Back to home',
     },
@@ -216,6 +222,12 @@ const resources = {
       questionnaire: {
         prevQuestion: '← Question précédente',
       },
+      welcome: {
+        title: 'Bienvenue sur CaneDr',
+        body: "Un guide interactif gratuit du CIRAD pour identifier les maladies et désordres de la canne à sucre : diagnostic guidé et catalogue de plus de 80 maladies illustré par 500 photographies.",
+        enter: 'Entrer',
+        close: 'Fermer',
+      },
       notFound: 'Page introuvable',
       backHome: "Retour à l'accueil",
     },
@@ -324,6 +336,12 @@ const resources = {
       },
       questionnaire: {
         prevQuestion: '← Pregunta anterior',
+      },
+      welcome: {
+        title: 'Bienvenido a CaneDr',
+        body: 'Una guía interactiva gratuita del CIRAD para identificar las enfermedades y trastornos de la caña de azúcar: diagnóstico guiado y un catálogo de más de 80 enfermedades ilustrado con 500 fotografías.',
+        enter: 'Entrar',
+        close: 'Cerrar',
       },
       notFound: 'Página no encontrada',
       backHome: 'Volver al inicio',

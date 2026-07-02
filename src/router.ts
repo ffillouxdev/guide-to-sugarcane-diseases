@@ -6,6 +6,7 @@ import { aboutView } from './views/about'
 import { privacyView } from './views/privacy'
 import { legalView } from './views/legal'
 import { initQuestionnaire } from './components/questionnaire'
+import { isFirstVisit } from './components/welcome_popup'
 import {
   type Lang,
   type PageKey,
@@ -13,6 +14,7 @@ import {
   LANGS,
   SITE_ORIGIN,
   OG_LOCALES,
+  langFromPath,
   resolvePath,
   urlFor,
 } from './routes'
@@ -104,6 +106,19 @@ export function render(app: HTMLElement): void {
 export function navigateTo(path: string, app: HTMLElement): void {
   history.pushState(null, '', path)
   render(app)
+}
+
+// First visit on an unprefixed (English) URL: honour the browser language for
+// fr/es by rewriting the URL before the first render. Explicit /fr/ and /es/
+// URLs always win, and any browser language other than fr/es stays English.
+export function applyBrowserLanguage(): void {
+  if (!isFirstVisit()) return
+  if (langFromPath(globalThis.location.pathname) !== 'en') return
+  const browser = (globalThis.navigator?.language ?? '').toLowerCase()
+  const lang = browser.startsWith('fr') ? 'fr' : browser.startsWith('es') ? 'es' : null
+  if (!lang) return
+  const { page } = resolvePath(globalThis.location.pathname)
+  if (page) history.replaceState(null, '', urlFor(page, lang))
 }
 
 const EXTERNAL_HREF_RE = /^(https?:|\/\/|#|mailto:|tel:)/
