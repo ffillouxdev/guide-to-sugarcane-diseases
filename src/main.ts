@@ -1,10 +1,10 @@
 import './style.css'
+import { applyBrowserLanguage, initRouter, navigateTo } from './router'
+import { initOffline } from './layout'
+import { showWelcomePopup } from './components/welcome_popup'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
-  <main class="h-screen">
-    <h1 class="font-thin">
-      Guide to Sugarcane Diseases
-    </h1>
-  </main>
-`
-
+const app = document.querySelector<HTMLDivElement>('#app')!
+applyBrowserLanguage()
+initRouter(app)
+initOffline()
+showWelcomePopup((path) => navigateTo(path, app))

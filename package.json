@@ -5,11 +5,21 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "tsc && vite build && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "verify": "node scripts/verify-build.js",
+    "sonar": "sonar"
   },
   "devDependencies": {
+    "@sonar/scan": "^4.3.6",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^3.4.1",
     "typescript": "~5.6.2",
     "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "i18next": "^26.0.4",
+    "i18next-browser-languagedetector": "^8.2.1"
   }
 }

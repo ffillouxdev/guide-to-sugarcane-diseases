@@ -1,0 +1,24 @@
+# CaneDr — A Guide to Sugarcane Diseases
+
+> CaneDr is a free, trilingual (English / French / Spanish) interactive web guide, published by CIRAD, for identifying sugarcane diseases and disorders. It offers a guided diagnosis based on observed symptoms and a searchable catalog of more than 80 referenced diseases, illustrated with around 500 colour photographs. The scientific content is based on the book *A Guide to Sugarcane Diseases* (2nd edition, Éditions Quæ), edited by Philippe Rott, Jean-Claude Girard and Jean Heinrich Daugrois.
+
+The site is a Progressive Web App (PWA) that works fully offline once loaded. It collects no personal data: no cookies, no trackers, no analytics. Disease content and photographs are the property of CIRAD and contributing photographers.
+
+## Pages
+
+- [Home — Guided diagnosis](https://canedr.cirad.fr/): Answer a few questions about the symptoms observed on the sugarcane to narrow down possible diseases.
+- [Disease catalog](https://canedr.cirad.fr/catalog): Browse, search and sort all 80+ referenced diseases and disorders, with their pathogens, symptoms, photographs and geographical distribution.
+- [About](https://canedr.cirad.fr/about): Background on the project, the source book and credits.
+- [Privacy policy](https://canedr.cirad.fr/privacy): Data handling — no personal data, no cookies, no trackers.
+- [Legal notice](https://canedr.cirad.fr/legal): Publisher, hosting, credits and copyright.
+
+## About the publisher
+
+- [CIRAD](https://www.cirad.fr/): French agricultural research and cooperation organisation working for the sustainable development of tropical and Mediterranean regions.
+- [A Guide to Sugarcane Diseases (Éditions Quæ)](https://www.quae.com/produit/78/9782876143869/a-guide-to-sugarcane-diseases): The source book on which the scientific content is based.
+
+## Notes
+
+- Available in English, French and Spanish. Questionnaire and interface text are translated; disease names remain in English by design.
+- Contact for questions or photographs of sugarcane diseases: canedr@cirad.fr
+- Disease images are confidential and are not available for indexing or reuse.
